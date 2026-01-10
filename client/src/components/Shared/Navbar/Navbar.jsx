@@ -6,32 +6,32 @@ import { ThemeContext } from '../../../ThemeProvider/ThemeProvider';
 import { MdLightMode } from 'react-icons/md';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import CartSidebar from '../../Home/CartSidebar/CartSidebar';
+import Profail from './Profail';
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [open, setOpen] = useState(false);
   const count = 6;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow dark:bg-green-50 ">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-green-50 shadow  ">
       <div className="container py-4 lg:py-0 mx-auto px-4">
         <div className="lg:flex lg:items-center lg:justify-between">
           {/* Logo & Mobile Toggle */}
           <div className="flex items-center justify-between">
-            <a href="#">
+            <Link to="/">
               <img
                 className=" md:w-[150px] md:h-[80px] w-[100px] h-[48px] object-cover pb-2"
                 src={logo}
                 alt="Logo"
               />
-            </a>
+            </Link>
 
             {/* Mobile menu button */}
             <div className="flex lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="text-gray-900 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none"
+                className="text-gray-900 hover:text-gray-600  focus:outline-none"
                 aria-label="toggle menu"
               >
                 {!isOpen ? (
@@ -75,50 +75,50 @@ const Navbar = () => {
               lg:relative lg:flex lg:w-auto lg:items-center lg:opacity-100
             ${
               isOpen
-                ? 'translate-x-0 opacity-100 bg-white dark:bg-green-100 shadow-lg lg:shadow-none'
+                ? 'translate-x-0 opacity-100 bg-white  shadow-lg lg:shadow-none'
                 : '-translate-x-full opacity-0 lg:translate-x-0'
             }`}
           >
             <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
               <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold  rounded-md transition-colors duration-300 hover:text-green-600
+                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="jijdfj"
+                to="/"
               >
                 Home
               </NavLink>
               <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold  rounded-md transition-colors duration-300 hover:text-green-600
+                to="about-us"
+                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="jijdfj"
               >
                 About Us
               </NavLink>
               <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold  rounded-md transition-colors duration-300 hover:text-green-600
+                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="jijdfj"
+                to="shop"
               >
                 Shop (All Products)
               </NavLink>
               <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold  rounded-md transition-colors duration-300 hover:text-green-600
+                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="jijdfj"
+                to="packages"
               >
                 Packages
               </NavLink>
               <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold  rounded-md transition-colors duration-300 hover:text-green-600
+                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="jijdfj"
+                to="blog"
               >
                 Blog
               </NavLink>
               <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold  rounded-md transition-colors duration-300 hover:text-green-600
+                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="jijdfj"
+                to="contact-us"
               >
                 Contact Us
               </NavLink>
@@ -129,7 +129,7 @@ const Navbar = () => {
                     <summary className="text-gray-800 text-lg hover:text-green-600 font-semibold">
                       Plants
                     </summary>
-                    <ul className="p-2 bg-green-100 w-40 text-gray-800  z-1">
+                    <ul className="p-2 bg-green-100 w-40 text-gray-800  z-20">
                       <li>
                         <a>Flowering Plants</a>
                       </li>
@@ -153,29 +153,23 @@ const Navbar = () => {
 
             {/* Right Section */}
             <div className="flex items-center mt-4 lg:mt-0">
-              <div className="relative inline-block mr-5">
+              <Link
+                to={'/addToCard'}
+                className="relative inline-block mr-5 cursor-pointer"
+              >
                 {/* Cart Icon */}
-                <FaShoppingCart
-                  onClick={() => setOpen(true)}
-                  className="text-green-600 text-2xl cursor-pointer"
-                />
+                <FaShoppingCart className="text-green-600 text-2xl " />
 
                 {/* Badge */}
                 {count > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-green-300 text-white text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full">
+                  <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full">
                     {count}
                   </span>
                 )}
-              </div>
-
-              <button className="flex items-center focus:outline-none">
-                <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                  <img
-                    src="https://images.unsplash.com/photo-1517841905240-472988babdf9"
-                    alt="avatar"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
+              </Link>
+              <Profail />
+              <button className="flex items-center focus:outline-none font-bold border border-green-500 px-3 py-1 rounded-md text-gray-950 hover:bg-green-600 hover:text-white transition duration-300">
+                <Link to={'login'}>Login</Link>
               </button>
               <button onClick={toggleTheme} className="pl-3">
                 {theme === 'light' ? (
@@ -187,7 +181,6 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <CartSidebar open={open} setOpen={setOpen} />
       </div>
     </nav>
   );

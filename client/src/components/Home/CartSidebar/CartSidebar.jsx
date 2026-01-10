@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Link } from 'react-router';
-import { FiX, FiTrash2, FiShoppingCart } from 'react-icons/fi';
+import { FiTrash2 } from 'react-icons/fi';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 const demoItems = [
@@ -128,7 +127,7 @@ export default function CartSidebar({ open, setOpen }) {
           </div>
 
           <Link
-            to="/checkout"
+            to="/addTOCard"
             className="btn btn-success w-full"
             onClick={() => setOpen(false)}
           >

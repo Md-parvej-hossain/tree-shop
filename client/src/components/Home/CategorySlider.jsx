@@ -20,11 +20,11 @@ const CategorySlider = () => {
     >
       {category.map(category => (
         <SwiperSlide key={category.id}>
-          <div className="bg-white rounded-xl shadow p-4 text-center my-4">
+          <div className="bg-white rounded-xl group shadow p-4 text-center my-4 ">
             <img
               src={category.image}
               alt={category.name}
-              className="w-full h-40 object-cover rounded-lg"
+              className="w-full h-40 object-cover rounded-lg group-hover:scale-110 transition duration-700"
             />
             <h3 className="mt-3 font-semibold text-lg dark:text-green-400 ">
               {category.name}

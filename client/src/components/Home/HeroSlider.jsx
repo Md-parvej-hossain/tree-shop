@@ -7,6 +7,7 @@ import plant1 from '../../assets/images/plant1.png';
 import plant2 from '../../assets/images/plant2.png';
 import plant3 from '../../assets/images/plant3.jpg';
 import Button from '../Shared/button/button';
+import { Link } from 'react-router';
 const HeroSlider = () => {
   const slides = [plant1, plant2, plant3];
 
@@ -25,7 +26,10 @@ const HeroSlider = () => {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button />
+              <Link to="/shop">
+                <Button />
+              </Link>
+
               <button className="btn bg-white border border-green-700 text-green-700 shadow hover:bg-green-500 hover:text-white  ">
                 Explore Now
               </button>

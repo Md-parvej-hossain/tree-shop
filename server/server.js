@@ -1,0 +1,26 @@
+const express = require('express');
+const mongoose = require('mongoose');
+
+//express app initialization
+const app = express();
+app.use(express.json());
+
+//database connection 
+mongoose.connect('mongodb://localhost/myapp').then(() => {
+  console.log('Connected to MongoDB');
+}).catch(err => {
+  console.error('MongoDB connection error:', err);
+});
+//application routes
+
+
+//default error handler
+function errorHandler(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500).json({ error: err.message });
+}
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
