@@ -8,7 +8,7 @@ const Plants = () => {
         <h2 className="text-2xl md:text-3xl lg:text-5xl font-semibold md:font-bold py-4">
           New Arrival
         </h2>
-        <ul className="flex justify-center items-center gap-5 md:gap-10 text-xl font-bold py-4">
+        <ul className="flex justify-center items-center gap-5 md:gap-10 sm:text-sm text-lg md:text-xl font-bold py-4">
           <li>
             <NavLink>All</NavLink>
           </li>

@@ -1,7 +1,12 @@
 // components/Sidebar.jsx
 import { Link, NavLink } from 'react-router';
-import { MdDashboard, MdPeople, MdSettings, MdLogout } from 'react-icons/md';
-import logo from '../../../assets/images/logo.png';
+import {
+  MdDashboard,
+  MdPeople,
+  MdSettings,
+  MdLogout,
+  MdFormatListBulletedAdd,
+} from 'react-icons/md';
 const Sidebar = () => {
   return (
     <div className="drawer-side shadow-lg shadow-green-600 ">
@@ -24,6 +29,11 @@ const Sidebar = () => {
           <li>
             <NavLink to="/dashboard/users">
               <MdPeople /> Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/addPlant">
+              <MdFormatListBulletedAdd /> AddPlant
             </NavLink>
           </li>
 

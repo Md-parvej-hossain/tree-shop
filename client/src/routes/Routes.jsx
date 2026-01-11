@@ -11,6 +11,8 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import Overview from '../pages/Dashboard/Overview/Overview';
 import Users from '../pages/Dashboard/user/Users';
 import AddToCard from '../pages/AddToCard/AddToCard';
+import SignUp from '../pages/SignUp/SignUp';
+import AddPlant from '../pages/Dashboard/addPlant/AddPlant';
 
 const router = createBrowserRouter([
   {
@@ -52,14 +54,31 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
     children: [
-      { index: true, element: <Overview /> },
-      { path: 'users', element: <Users /> },
-      { path: 'settings', element: <p>This is a sattting</p> },
+      {
+        index: true,
+        element: <Overview />,
+      },
+      {
+        path: 'users',
+        element: <Users />,
+      },
+      {
+        path: 'addPlant',
+        element: <AddPlant />,
+      },
+      {
+        path: 'settings',
+        element: <p>This is a sattting</p>,
+      },
     ],
   },
   {
     path: 'login',
     element: <Login />,
+  },
+  {
+    path: 'signUp',
+    element: <SignUp />,
   },
 ]);
 

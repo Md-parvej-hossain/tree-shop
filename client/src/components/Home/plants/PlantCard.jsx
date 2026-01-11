@@ -29,7 +29,7 @@ const PlantCard = () => {
         >
           <button
             title="Quick View"
-            className="  bg-green-500 text-white hover:bg-white hover:text-green-500 rounded-full p-2   cursor-pointer "
+            className="  bg-green-400 text-white hover:bg-white hover:text-green-400 rounded-full p-2   cursor-pointer "
           >
             <FaEye size={25} onClick={() => setIsOpen(true)} />
           </button>

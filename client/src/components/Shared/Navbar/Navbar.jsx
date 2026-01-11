@@ -5,7 +5,6 @@ import { FaCartPlus, FaShoppingCart } from 'react-icons/fa';
 import { ThemeContext } from '../../../ThemeProvider/ThemeProvider';
 import { MdLightMode } from 'react-icons/md';
 import { MdOutlineDarkMode } from 'react-icons/md';
-import CartSidebar from '../../Home/CartSidebar/CartSidebar';
 import Profail from './Profail';
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
