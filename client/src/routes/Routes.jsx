@@ -13,6 +13,10 @@ import Users from '../pages/Dashboard/user/Users';
 import AddToCard from '../pages/AddToCard/AddToCard';
 import SignUp from '../pages/SignUp/SignUp';
 import AddPlant from '../pages/Dashboard/addPlant/AddPlant';
+import UpdatePlant from '../pages/Dashboard/updatePlant/UpdatePlant';
+import AllPlant from '../pages/Dashboard/Allplant/AllPlant';
+import ActiveSeller from '../pages/Dashboard/ActiveSeller/ActiveSeller';
+import PandingSeller from '../pages/Dashboard/PandingSaller/PandingSeller';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +69,22 @@ const router = createBrowserRouter([
       {
         path: 'addPlant',
         element: <AddPlant />,
+      },
+      {
+        path: 'upDatePlant/:id',
+        element: <UpdatePlant />,
+      },
+      {
+        path: 'activeSeller',
+        element: <ActiveSeller />,
+      },
+      {
+        path: 'pendingSeller',
+        element: <PandingSeller />,
+      },
+      {
+        path: 'allPlant',
+        element: <AllPlant />,
       },
       {
         path: 'settings',

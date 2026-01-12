@@ -6,7 +6,9 @@ import { ThemeContext } from '../../../ThemeProvider/ThemeProvider';
 import { MdLightMode } from 'react-icons/md';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import Profail from './Profail';
+import useAuth from '../../../hooks/useAuth';
 const Navbar = () => {
+  const { user } = useAuth();
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
   const count = 6;
@@ -166,10 +168,16 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-              <Profail />
-              <button className="flex items-center focus:outline-none font-bold border border-green-500 px-3 py-1 rounded-md text-gray-950 hover:bg-green-600 hover:text-white transition duration-300">
-                <Link to={'login'}>Login</Link>
-              </button>
+              {user ? (
+                <Profail />
+              ) : (
+                <button className="flex items-center focus:outline-none font-bold border border-green-500 px-3 py-1 rounded-md text-gray-950 hover:bg-green-600 hover:text-white transition duration-300">
+                  <Link to={'login'} className="p-1">
+                    Login
+                  </Link>
+                </button>
+              )}
+
               <button onClick={toggleTheme} className="pl-3">
                 {theme === 'light' ? (
                   <MdOutlineDarkMode size={30} />

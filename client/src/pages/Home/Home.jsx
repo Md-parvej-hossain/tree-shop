@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 import CategorySlider from '../../components/Home/CategorySlider';
 import HeroSlider from '../../components/Home/HeroSlider';
 import Plants from '../../components/Home/plants/Plants';
@@ -12,14 +12,14 @@ const Home = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
-      <Helmet>
+      {/* <Helmet>
         <title>PlantNet | Home</title>
         <meta
           name="description"
           content="This is the description for the home page"
         />
         <link rel="canonical" href="https://yourwebsite.com/" />
-      </Helmet>
+      </Helmet> */}
       <div
         onClick={() => setOpen(true)}
         className="fixed absolute z-50 bottom-96 -right-0 bg-green-50 hover:bg-green-200"

@@ -1,6 +1,4 @@
-
-
-const AddPlant = () => {
+const UpdatePlant = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -26,7 +24,7 @@ const AddPlant = () => {
     <div className="min-h-screen bg-base-400 flex items-center justify-center px-4">
       <div className="w-full max-w-3xl bg-base-100 shadow-xl rounded-box p-6 sm:p-8">
         <h2 className="text-2xl font-semibold text-center mb-6">
-          🌱 Add New Plant
+          🌱 Update Plant
         </h2>
 
         <form
@@ -166,4 +164,4 @@ const AddPlant = () => {
   );
 };
 
-export default AddPlant;
+export default UpdatePlant;

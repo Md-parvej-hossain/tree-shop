@@ -7,6 +7,10 @@ import {
   MdLogout,
   MdFormatListBulletedAdd,
 } from 'react-icons/md';
+import { MdOutlineBorderAll } from 'react-icons/md';
+import { VscVmActive } from 'react-icons/vsc';
+import { MdPendingActions } from 'react-icons/md';
+import { GrUpdate } from 'react-icons/gr';
 const Sidebar = () => {
   return (
     <div className="drawer-side shadow-lg shadow-green-600 ">
@@ -34,6 +38,21 @@ const Sidebar = () => {
           <li>
             <NavLink to="/dashboard/addPlant">
               <MdFormatListBulletedAdd /> AddPlant
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/activeSeller">
+              <VscVmActive /> ActiveSeller
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/pendingSeller">
+              <MdPendingActions /> PendingSeller
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/allPlant">
+              <MdOutlineBorderAll /> AllPlant
             </NavLink>
           </li>
 

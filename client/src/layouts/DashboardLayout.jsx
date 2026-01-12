@@ -1,7 +1,7 @@
 // layout/DashboardLayout.jsx
 import { Outlet } from 'react-router';
 import Navbar from '../components/Dashbord/Nabver/Nabver';
-import Sidebar from '../components/Dashbord/sidebar/Stdebar';
+import Sidebar from '../components/Dashbord/sidebar/Sidebar';
 
 const DashboardLayout = () => {
   return (
