@@ -5,7 +5,13 @@ const plantSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, 'Category is required'],
-      enum: ['Flower', 'Vegetable', 'Tree', 'Herb'], // allowed categories
+      enum: ['Flower', 'Indoor', 'Outdoor', 'Succulent'], // allowed categories
+      trim: true,
+    },
+    type: {
+      type: String,
+      required: [true, 'Type is required'],
+      enum: ['Top Rated', 'Trending', 'Best Seller'], // allowed categories
       trim: true,
     },
     description: {

@@ -1,4 +1,8 @@
+import { useParams } from 'react-router';
+
 const UpdatePlant = () => {
+  const { id } = useParams();
+  console.log(id);
   const handleSubmit = e => {
     e.preventDefault();
 

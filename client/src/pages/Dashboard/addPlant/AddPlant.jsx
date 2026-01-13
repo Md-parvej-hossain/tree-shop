@@ -1,25 +1,39 @@
-
+import uploadImage from '../../../api/uplodeImageImgeBB/uploadImage';
+import usePostApi from '../../../hooks/usePostApi';
 
 const AddPlant = () => {
-  const handleSubmit = e => {
+  const { mutate, isLoading } = usePostApi('/plantes', {
+    successMessage: 'Plant added successfully',
+    invalidateKey: 'plants',
+  });
+
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
+    const imageFile = form.image.files[0];
 
+    // 🔹 Upload image to ImgBB
+    const imageUrl = await uploadImage(imageFile);
     const plantInfo = {
       name: formData.get('name'),
-      image: formData.get('image'),
-      newPrice: formData.get('newPrice'),
-      oldPrice: formData.get('oldPrice'),
+      image: imageUrl,
+      newPrice: Number(formData.get('newPrice')),
+      oldPrice: Number(formData.get('oldPrice')),
       description: formData.get('description'),
-      rating: formData.get('rating'),
-      quantity: formData.get('quantity'),
+      rating: Number(formData.get('rating')),
+      quantity: Number(formData.get('quantity')),
       category: formData.get('category'),
+      type: formData.get('type'),
     };
-
     console.log(plantInfo);
-    form.reset();
+    // 🔹 Call POST API
+    mutate(plantInfo, {
+      onSuccess: () => {
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -46,7 +60,6 @@ const AddPlant = () => {
               className="input input-bordered"
             />
           </div>
-
           {/* Category */}
           <div className="form-control">
             <label className="label">
@@ -73,7 +86,6 @@ const AddPlant = () => {
               className="input input-bordered"
             />
           </div>
-
           {/* Old Price */}
           <div className="form-control">
             <label className="label">
@@ -86,7 +98,6 @@ const AddPlant = () => {
               className="input input-bordered"
             />
           </div>
-
           {/* Rating */}
           <div className="form-control">
             <label className="label">
@@ -102,7 +113,6 @@ const AddPlant = () => {
               className="input input-bordered"
             />
           </div>
-
           {/* Quantity */}
           <div className="form-control">
             <label className="label">
@@ -140,7 +150,6 @@ const AddPlant = () => {
               className="file-input file-input-bordered w-full"
             />
           </div>
-
           {/* Description */}
           <div className="form-control md:col-span-2">
             <label className="label">
@@ -153,11 +162,15 @@ const AddPlant = () => {
               className="textarea textarea-bordered w-full"
             ></textarea>
           </div>
-
+          className="btn btn-success w-full"
           {/* Submit */}
           <div className="md:col-span-2">
-            <button type="submit" className="btn btn-success w-full">
-              Add Plant
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn btn-success w-full"
+            >
+              {isLoading ? 'Saving...' : 'Add Plant'}
             </button>
           </div>
         </form>

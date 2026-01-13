@@ -1,7 +1,19 @@
 import { NavLink } from 'react-router';
 import PlantCard from './PlantCard';
+import toast from 'react-hot-toast';
+import useGetApi from '../../../hooks/useGetApi';
+import { FadeLoader } from 'react-spinners';
 
 const Plants = () => {
+  const {
+    data = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetApi('Allplantes', '/plantes');
+  console.log(data);
+  if (isLoading) return <FadeLoader />;
+  if (isError) return toast.error(error?.message);
   return (
     <div>
       <div className="text-center items-center my-5">
@@ -24,11 +36,9 @@ const Plants = () => {
         </ul>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
-        <PlantCard />
-        <PlantCard />
-        <PlantCard />
-        <PlantCard />
-        <PlantCard />
+        {data.map(plant => (
+          <PlantCard key={plant.id} plants={plant} />
+        ))}
       </div>
     </div>
   );

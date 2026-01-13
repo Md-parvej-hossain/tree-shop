@@ -5,33 +5,67 @@ import { Link } from 'react-router';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import useAuth from './../../hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
+import usePostApi from '../../hooks/usePostApi';
+import uploadImage from '../../api/uplodeImageImgeBB/uploadImage';
 
 const SignUp = () => {
-  const { createUser, signInWithGoogle } = useAuth();
+  const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
+
+  // React Query mutation for your backend
+  const { mutate, isLoading } = usePostApi('/users', {
+    successMessage: 'User added successfully',
+    invalidateKey: 'users',
+  });
+
+  // Form submit handler
   const handleSubmit = async e => {
     e.preventDefault();
+
     const form = e.target;
     const formData = new FormData(form);
+    const imageFile = form.image.files[0];
+
+    // 🔹 Upload image to ImgBB
+    const imageUrl = await uploadImage(imageFile);
     const userInfo = {
       name: formData.get('name'),
       email: formData.get('email'),
       password: formData.get('password'),
-      image: formData.get('image'),
+      role: 'Customer',
+      status: 'Active',
+      image: imageUrl, // optional if you handle images
     };
-    console.log(userInfo);
-    // Optional: reset form
-    form.reset();
+
     try {
+      // 1️⃣ First, add user to Firebase Auth
       await createUser(userInfo.email, userInfo.password);
+      await updateUserProfile(userInfo.name, imageUrl);
+      // 2️⃣ Then, save user data in your backend (MongoDB)
+      mutate(userInfo);
+
+      // 3️⃣ Reset form
+      form.reset();
     } catch (err) {
-      console.error('Sign-up failed', err);
+      console.error('Sign-up failed:', err);
     }
   };
 
   // Handle Google Signin
+
   const handleGoogleSignIn = async () => {
     try {
-      signInWithGoogle();
+      const userCredential = await signInWithGoogle();
+      const user = userCredential.user;
+      const userInfo = {
+        name: user.displayName || 'No Name',
+        email: user.email,
+        image: user.photoURL || '', // optional
+        uid: user.uid,
+        role: 'Customer',
+        status: 'Active',
+      };
+
+      mutate(userInfo);
     } catch (err) {
       console.error('Google sign-in failed', err);
     }
@@ -63,6 +97,7 @@ const SignUp = () => {
             <h2 className="mt-4 text-lg sm:text-xl font-semibold text-center">
               Create your account
             </h2>
+
             {/* Google Login */}
             <button
               className="btn btn-outline w-full mt-6 flex items-center gap-3 border-gray-400"
@@ -71,8 +106,9 @@ const SignUp = () => {
               <FcGoogle />
               <span className="text-sm sm:text-base">Sign in with Google</span>
             </button>
+
+            {/* Sign Up Form */}
             <form onSubmit={handleSubmit}>
-              {/* Name (optional) */}
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text">Your Name</span>
@@ -85,7 +121,6 @@ const SignUp = () => {
                 />
               </div>
 
-              {/* Image */}
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text">Your Image</span>
@@ -97,7 +132,6 @@ const SignUp = () => {
                 />
               </div>
 
-              {/* Email */}
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text">Email Address</span>
@@ -111,7 +145,6 @@ const SignUp = () => {
                 />
               </div>
 
-              {/* Password */}
               <div className="form-control mt-4">
                 <label className="label">
                   <span className="label-text">Password</span>
@@ -125,17 +158,19 @@ const SignUp = () => {
                 />
               </div>
 
-              {/* Submit */}
-              <button type="submit" className="btn btn-neutral w-full mt-6">
-                Create Account
+              <button
+                type="submit"
+                className="btn btn-neutral w-full mt-6"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Creating...' : 'Create Account'}
               </button>
             </form>
 
-            {/* Footer */}
             <div className="divider text-xs uppercase mt-6">
               Already have an account?
               <Link className="underline ml-1" to="/login">
-                sign in
+                Sign in
               </Link>
             </div>
           </div>

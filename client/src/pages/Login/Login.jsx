@@ -4,20 +4,21 @@ import { Link } from 'react-router';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
+import usePostApi from '../../hooks/usePostApi';
 const Login = () => {
   const { signIn, signInWithGoogle } = useAuth();
-
+  const { mutate, isLoading } = usePostApi('/users', {
+    successMessage: 'User added successfully',
+    invalidateKey: 'users',
+  });
   const handleSubmit = async e => {
     e.preventDefault();
-
     const form = e.target;
     const formData = new FormData(form);
-
     const userInfo = {
       name: formData.get('name'),
       password: formData.get('password'),
     };
-
     console.log(userInfo);
     // Optional: reset form
     form.reset();
@@ -31,9 +32,20 @@ const Login = () => {
   // Handle Google Signin
   const handleGoogleSignIn = async () => {
     try {
-      signInWithGoogle();
-    } catch {
-      console.error('Google sign-in failed');
+      const userCredential = await signInWithGoogle();
+      const user = userCredential.user;
+      const userInfo = {
+        name: user.displayName || 'No Name',
+        email: user.email,
+        image: user.photoURL || '', // optional
+        uid: user.uid,
+        role: 'Customer',
+        status: 'Active',
+      };
+
+      mutate(userInfo);
+    } catch (err) {
+      console.error('Google sign-in failed', err);
     }
   };
   return (
@@ -120,7 +132,7 @@ const Login = () => {
             <div className="divider text-xs uppercase mt-6  text-black cursor-pointer">
               Don't have an account?
               <Link className="underline" to="/signup">
-                sign up
+                {isLoading ? 'sign up...' : 'sign up'}
               </Link>
             </div>
           </div>

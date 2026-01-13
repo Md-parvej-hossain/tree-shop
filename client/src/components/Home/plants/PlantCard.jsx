@@ -3,8 +3,8 @@ import { FaRegStar, FaStar, FaEye, FaShoppingCart } from 'react-icons/fa';
 import PlantCardModel from '../../Model/PlantCardModel/PlantCardModel';
 import CartSidebar from '../CartSidebar/CartSidebar';
 
-const PlantCard = () => {
-  const rating = 4;
+const PlantCard = ({ plants }) => {
+  console.log(plants);
   const max = 5;
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -46,12 +46,12 @@ const PlantCard = () => {
       <PlantCardModel isOpen={isOpen} setIsOpen={setIsOpen} onClose={onClose} />
       {/* Card Body */}
       <div className="card-body items-center text-center">
-        <h2 className="card-title">Green Tree</h2>
+        <h2 className="card-title">{plants.name}</h2>
 
         {/* Rating */}
         <div className="flex gap-1 text-yellow-400">
           {[...Array(max)].map((_, index) =>
-            index < rating ? (
+            index < plants.rating ? (
               <FaStar key={index} />
             ) : (
               <FaRegStar key={index} className="text-gray-300" />
@@ -61,7 +61,14 @@ const PlantCard = () => {
 
         {/* Price */}
         <div className="card-actions text-black font-semibold text-lg">
-          <p>$7465</p>
+          <div className="inline-flex items-center gap-2  px-4 py-2  ">
+            <span className="text-gray-400 line-through text-sm">
+              ${plants.oldPrice}
+            </span>
+            <span className="text-green-600 font-semibold text-lg">
+              ${plants.newPrice}
+            </span>
+          </div>
         </div>
       </div>
       <CartSidebar open={open} setOpen={setOpen} />

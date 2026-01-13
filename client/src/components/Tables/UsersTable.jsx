@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 
-const UsersTable = ({ users, onBlock, onDelete }) => {
+const UsersTable = ({ users, onDelete }) => {
   return (
     <div className="w-full p-4">
       <h2 className="text-2xl font-bold mb-4 text-green-700">
@@ -64,7 +64,7 @@ const UsersTable = ({ users, onBlock, onDelete }) => {
                   </span>
                 </td>
 
-                <td>{user.joinedDate}</td>
+                <td>{new Date(user.createdAt).toLocaleDateString()}</td>
 
                 <td className="flex gap-2 justify-center">
                   <Link
@@ -73,13 +73,6 @@ const UsersTable = ({ users, onBlock, onDelete }) => {
                   >
                     View
                   </Link>
-
-                  <button
-                    onClick={() => onBlock(user._id)}
-                    className="btn btn-xs btn-warning"
-                  >
-                    {user.status === 'active' ? 'Block' : 'Unblock'}
-                  </button>
 
                   <button
                     onClick={() => onDelete(user._id)}
@@ -130,13 +123,6 @@ const UsersTable = ({ users, onBlock, onDelete }) => {
               <p className="text-sm mt-1">Joined: {user.joinedDate}</p>
 
               <div className="flex gap-2 mt-3">
-                <button
-                  onClick={() => onBlock(user._id)}
-                  className="btn btn-sm btn-warning flex-1"
-                >
-                  {user.status === 'active' ? 'Block' : 'Unblock'}
-                </button>
-
                 <button
                   onClick={() => onDelete(user._id)}
                   className="btn btn-sm btn-error flex-1 text-white"

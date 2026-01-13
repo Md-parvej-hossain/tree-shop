@@ -1,40 +1,49 @@
-import React from 'react';
+import useDeleteApi from '../../../hooks/useDeleatApi';
+import useGetApi from '../../../hooks/useGetApi';
 import UsersTable from '../../../components/Tables/UsersTable';
-
+import Swal from 'sweetalert2';
 const Users = () => {
-  const users = [
-    {
-      _id: '1',
-      name: 'Admin User',
-      email: 'admin@gmail.com',
-      role: 'admin',
-      status: 'active',
-      joinedDate: '2024-10-01',
-      photo: '',
-    },
-    {
-      _id: '2',
-      name: 'Normal User',
-      email: 'user@gmail.com',
-      role: 'user',
-      status: 'blocked',
-      joinedDate: '2024-11-15',
-      photo: '',
-    },
-  ];
-  const handleBlock = id => {
-    console.log('Block/Unblock user:', id);
-  };
+  const { data = [], isLoading, isError, error } = useGetApi('users', '/users');
+  console.log(data);
+  const deleteUser = useDeleteApi('/users', {
+    invalidateKey: 'users',
+    successMessage: 'User deleted successfully',
+  });
 
   const handleDelete = id => {
-    if (confirm('Are you sure?')) {
-      console.log('Delete user:', id);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(result => {
+      if (result.isConfirmed) {
+        deleteUser.mutate(id, {
+          onSuccess: () => {
+            Swal.fire(
+              'Deleted!',
+              'User has been deleted successfully.',
+              'success'
+            );
+          },
+        });
+      }
+    });
   };
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>{error?.message}</p>;
 
   return (
     <div>
-      <UsersTable users={users} onBlock={handleBlock} onDelete={handleDelete} />
+      <UsersTable
+        users={data}
+        onDelete={handleDelete}
+        deleting={deleteUser.isLoading}
+      />
     </div>
   );
 };

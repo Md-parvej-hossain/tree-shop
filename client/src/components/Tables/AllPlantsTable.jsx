@@ -1,6 +1,7 @@
-import { Link } from "react-router";
+import { Link } from 'react-router';
 
 const AllPlantsTable = ({ plants, onDelete }) => {
+  console.log(plants);
   return (
     <div className="w-full p-4">
       <h2 className="text-2xl font-bold mb-4 text-green-700">🌿 All Plants</h2>
@@ -26,7 +27,7 @@ const AllPlantsTable = ({ plants, onDelete }) => {
                 <td className="font-semibold">{plant.name}</td>
                 <td>{plant.type}</td>
                 <td>{plant.category}</td>
-                <td>${plant.price}</td>
+                <td>${plant.newPrice}</td>
                 <td className="flex gap-2 justify-center">
                   <Link
                     to={`/dashboard/upDatePlant/${plant._id}`}
@@ -63,7 +64,7 @@ const AllPlantsTable = ({ plants, onDelete }) => {
                 {plant.category}
               </p>
               <p>
-                <span className="font-semibold">Price:</span> ${plant.price}
+                <span className="font-semibold">Price:</span> $ {plant.newPrice}
               </p>
 
               <div className="flex gap-2 mt-3">

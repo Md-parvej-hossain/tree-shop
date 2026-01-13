@@ -12,8 +12,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Routes
+// user routes
 app.use('/api', require('./routes/userRoutes'));
+// plant routes
+app.use('/api', require('./routes/plantRoutes'));
 
 // Health check
 app.get('/', (req, res) => {
