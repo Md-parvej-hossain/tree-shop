@@ -7,12 +7,15 @@ import { MdLightMode } from 'react-icons/md';
 import { MdOutlineDarkMode } from 'react-icons/md';
 import Profail from './Profail';
 import useAuth from '../../../hooks/useAuth';
+import './Navbar.css';
+import useGetApi from '../../../hooks/useGetApi';
 const Navbar = () => {
   const { user } = useAuth();
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
-  const count = 6;
 
+  const { data = [] } = useGetApi('cards', '/cards');
+  const count = data.length;
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-green-50 shadow  ">
       <div className="container py-4 lg:py-0 mx-auto px-4">

@@ -162,7 +162,7 @@ const AddPlant = () => {
               className="textarea textarea-bordered w-full"
             ></textarea>
           </div>
-          className="btn btn-success w-full"
+
           {/* Submit */}
           <div className="md:col-span-2">
             <button

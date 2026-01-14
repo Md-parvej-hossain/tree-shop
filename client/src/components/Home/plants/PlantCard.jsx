@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FaRegStar, FaStar, FaEye, FaShoppingCart } from 'react-icons/fa';
 import PlantCardModel from '../../Model/PlantCardModel/PlantCardModel';
 import CartSidebar from '../CartSidebar/CartSidebar';
+import usePostApi from '../../../hooks/usePostApi';
 
 const PlantCard = ({ plants }) => {
   console.log(plants);
@@ -9,16 +10,32 @@ const PlantCard = ({ plants }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const onClose = () => setIsOpen(false);
+  const { mutate } = usePostApi('/cards', {
+    successMessage: 'Card added successfully',
+    invalidateKey: 'card',
+  });
+
+  // Function to handle add to cart click
+  const handleAddToCart = async () => {
+    if (!plants?._id) return; // safety check
+    await mutate({
+      name: plants.name,
+      image: plants.image,
+      price: plants.newPrice,
+      quantity: 1,
+    });
+  };
   return (
     <div className="card bg-base-100 group shadow-sm overflow-hidden">
       {/* Image Wrapper */}
       <div className="relative">
         <figure className="px-10 pt-10">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+            src={plants.image}
+            referrerPolicy="no-referrer"
             alt="Plant"
             className="rounded-xl transition-all duration-500 
-              group-hover:scale-110 group-hover:opacity-50"
+              group-hover:scale-110 group-hover:opacity-50 w-[250px] h-[180px] object-cover"
           />
         </figure>
 
@@ -35,6 +52,7 @@ const PlantCard = ({ plants }) => {
           </button>
 
           <button
+            onClick={handleAddToCart}
             title="Add To Card"
             className="   bg-green-500 text-white hover:bg-white hover:text-green-500 rounded-full p-2   cursor-pointer "
           >
@@ -42,8 +60,7 @@ const PlantCard = ({ plants }) => {
           </button>
         </div>
       </div>
-      {/* PlantCardModel */}
-      <PlantCardModel isOpen={isOpen} setIsOpen={setIsOpen} onClose={onClose} />
+
       {/* Card Body */}
       <div className="card-body items-center text-center">
         <h2 className="card-title">{plants.name}</h2>
@@ -70,6 +87,13 @@ const PlantCard = ({ plants }) => {
             </span>
           </div>
         </div>
+        {/* PlantCardModel */}
+        <PlantCardModel
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          onClose={onClose}
+          id={plants._id}
+        />
       </div>
       <CartSidebar open={open} setOpen={setOpen} />
     </div>

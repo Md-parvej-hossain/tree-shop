@@ -17,6 +17,7 @@ import UpdatePlant from '../pages/Dashboard/updatePlant/UpdatePlant';
 import AllPlant from '../pages/Dashboard/Allplant/AllPlant';
 import ActiveSeller from '../pages/Dashboard/ActiveSeller/ActiveSeller';
 import PandingSeller from '../pages/Dashboard/PandingSaller/PandingSeller';
+import PrivateRoute from './PrivateRoutes';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/addToCard',
-        element: <AddToCard />,
+        element: (
+          <PrivateRoute>
+            <AddToCard />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/contact-us',
@@ -56,7 +61,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,

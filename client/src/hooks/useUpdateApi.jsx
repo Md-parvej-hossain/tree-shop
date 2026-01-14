@@ -7,7 +7,7 @@ const useUpdateApi = (url, options = {}) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, data, method = 'patch' }) => {
+    mutationFn: async ({ id, data, method = 'put' }) => {
       const res = await axiosPublic[method](`${url}/${id}`, data);
       return res.data;
     },

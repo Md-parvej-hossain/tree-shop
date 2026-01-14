@@ -38,6 +38,11 @@ const plantSchema = new mongoose.Schema(
       default: 0,
       min: [0, 'Old price must be at least 0'],
     },
+    image: {
+      type: String,
+      default: '',
+      required: [true, 'Image URL is required'],
+    },
     quantity: {
       type: Number,
       required: [true, 'Quantity is required'],

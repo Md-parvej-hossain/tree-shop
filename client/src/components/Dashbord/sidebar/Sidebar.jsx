@@ -10,8 +10,9 @@ import {
 import { MdOutlineBorderAll } from 'react-icons/md';
 import { VscVmActive } from 'react-icons/vsc';
 import { MdPendingActions } from 'react-icons/md';
-import { GrUpdate } from 'react-icons/gr';
+import useAuth from '../../../hooks/useAuth';
 const Sidebar = () => {
+  const { logOut } = useAuth();
   return (
     <div className="drawer-side shadow-lg shadow-green-600 ">
       <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
@@ -65,7 +66,7 @@ const Sidebar = () => {
           <div className="divider"></div>
 
           <li>
-            <button className="text-error">
+            <button onClick={logOut} className="text-error">
               <MdLogout /> Logout
             </button>
           </li>

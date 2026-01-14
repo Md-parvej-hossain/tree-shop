@@ -1,11 +1,59 @@
 import { useState } from 'react';
-import { FaStar, FaTimes } from 'react-icons/fa';
+import { FaRegStar, FaStar, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router';
+import useGetSingleApi from '../../../hooks/useSingaleDataApi';
+import usePostApi from '../../../hooks/usePostApi';
+import toast from 'react-hot-toast';
 
-const PlantCardModel = ({ isOpen, onClose }) => {
-  const [qty, setQty] = useState(2);
+const PlantCardModel = ({ isOpen, onClose, id }) => {
+  const [qty, setQty] = useState(2); // for cart quantity
+  // local copy of plant.quantity
 
+  const {
+    data: plant,
+    isLoading,
+    isError,
+    error,
+  } = useGetSingleApi(['plant', id], `/plantes/${id}`, {
+    enabled: !!id,
+  });
+  const {
+    name,
+    image,
+    newPrice,
+    oldPrice,
+    description,
+    rating,
+    quantity,
+    category,
+    type,
+  } = plant || {};
+  console.log(plant);
+  const { mutate } = usePostApi('/cards', {
+    successMessage: 'Card added successfully',
+    invalidateKey: 'card',
+  });
+
+  // Function to handle add to cart click
+  const handleAddToCart = async () => {
+    if (!plant?._id) return; // safety check
+    await mutate({
+      name,
+      image,
+      price: newPrice,
+      quantity: qty, // your selected quantity
+    });
+
+    console.log('Added:', name, image, qty);
+  };
+
+  const totalPrice = qty * newPrice;
+  if (qty === quantity) {
+    toast.error('Not enough stock available');
+  }
   if (!isOpen) return null;
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>{error.message}</p>;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -23,69 +71,74 @@ const PlantCardModel = ({ isOpen, onClose }) => {
           {/* Image */}
           <div className="flex justify-center">
             <img
-              src="https://i.imgur.com/5Y5Z6cX.png"
+              src={image}
               alt="Plant"
-              className="max-h-[400px] object-contain"
+              className="max-h-[200px] md:max-h-[400px] object-contain"
             />
           </div>
 
           {/* Content */}
           <div>
-            <h2 className="text-2xl font-semibold mb-2">Aliquam vel</h2>
-
+            <h2 className="text-2xl font-semibold mb-2">{name}</h2>
             {/* Price */}
             <div className="flex items-center gap-4 mb-3">
-              <span className="text-gray-400 line-through text-lg">$12</span>
-              <span className="text-green-700 text-2xl font-bold">$10</span>
+              <span className="text-gray-400 line-through text-lg">
+                ${oldPrice}
+              </span>
+              <span className="text-green-700 text-2xl font-bold">
+                ${totalPrice}
+              </span>
             </div>
-
             {/* Description */}
             <p className="text-gray-500 text-sm leading-relaxed mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed
-              nulla eu dui suscipit ultricies. Mauris vestibulum volutpat nisl
-              vel cursus.
+              {description}
             </p>
-
             {/* Rating */}
             <div className="flex gap-1 text-yellow-400 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <FaStar key={i} />
-              ))}
+              {[...Array(5)].map((_, index) =>
+                index < rating ? (
+                  <FaStar key={index} />
+                ) : (
+                  <FaRegStar key={index} className="text-gray-300" />
+                )
+              )}
             </div>
-
             {/* Category */}
             <p className="font-medium mb-4">
-              Category : <span className="font-normal">Small Plant</span>
+              Category : <span className="font-normal">{category}</span>
             </p>
-
             {/* Quantity */}
             <div className="flex items-center gap-4 mb-6">
-              <span className="font-medium">Quantity</span>
+              <span className="font-medium">Quantity : {quantity}</span>
 
               <div className="flex items-center border rounded-md overflow-hidden">
                 <button
-                  onClick={() => setQty(qty > 1 ? qty - 1 : 1)}
+                  onClick={() => {
+                    setQty(qty > 1 ? qty - 1 : 1);
+                  }}
                   className="px-4 py-1 text-xl cursor-pointer"
                 >
                   −
                 </button>
                 <span className="px-4 py-1">{qty}</span>
                 <button
-                  onClick={() => setQty(qty + 1)}
+                  disabled={qty === quantity}
+                  onClick={() => {
+                    setQty(qty + 1);
+                  }}
                   className="px-4 py-1 text-xl cursor-pointer"
                 >
                   +
                 </button>
               </div>
             </div>
-
             {/* Add to Cart */}
-            <Link
-              to="/addToCard"
+            <button
+              onClick={handleAddToCart} // ✅ fixed
               className="bg-green-700 text-white px-8 py-3 rounded-md hover:bg-green-800 cursor-pointer"
             >
-              Add to cart
-            </Link>
+              <Link to="/addToCard"> Add to cart</Link>
+            </button>
           </div>
         </div>
       </div>

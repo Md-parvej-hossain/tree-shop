@@ -8,8 +8,14 @@ import Articles from '../../components/Home/Article/Articles';
 import { MdOutlineShoppingBag } from 'react-icons/md';
 import { useState } from 'react';
 import CartSidebar from '../../components/Home/CartSidebar/CartSidebar';
+import useGetApi from '../../hooks/useGetApi';
 const Home = () => {
   const [open, setOpen] = useState(false);
+  const { data = [] } = useGetApi('cards', '/cards');
+  const subtotal = data.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   return (
     <div className="relative">
       {/* <Helmet>
@@ -26,8 +32,8 @@ const Home = () => {
       >
         <div className=" p-4 rounded-lg shadow-lg flex flex-col items-center gap-2 text-gray-400 hover:text-white cursor-pointer">
           <MdOutlineShoppingBag />
-          <p>5 items</p>
-          <p>$453</p>
+          <p>{data.length} items</p>
+          <p>${subtotal}</p>
         </div>
       </div>
       <HeroSlider />

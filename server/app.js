@@ -14,9 +14,11 @@ app.use(express.json());
 
 // user routes
 app.use('/api', require('./routes/userRoutes'));
+
 // plant routes
 app.use('/api', require('./routes/plantRoutes'));
-
+// Routes
+app.use('/api', require('./routes/addToCartRoutes'));
 // Health check
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running' });
