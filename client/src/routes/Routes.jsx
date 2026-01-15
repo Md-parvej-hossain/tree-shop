@@ -18,6 +18,7 @@ import AllPlant from '../pages/Dashboard/Allplant/AllPlant';
 import ActiveSeller from '../pages/Dashboard/ActiveSeller/ActiveSeller';
 import PandingSeller from '../pages/Dashboard/PandingSaller/PandingSeller';
 import PrivateRoute from './PrivateRoutes';
+import Catagory from '../components/Home/Catefory/Catagory';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/packages',
         element: <PlantPackages />,
+      },
+      {
+        path: '/category/:categoryName',
+        element: <Catagory />,
       },
       {
         path: '/blog',

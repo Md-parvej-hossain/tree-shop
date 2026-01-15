@@ -17,5 +17,7 @@ router.get(
   '/plantes/category/:category',
   plantesController.getPlantesByCategory
 );
+// get plants by type
+router.get('/plantes/type/:type', plantesController.getPlantsByType);
 
 module.exports = router;

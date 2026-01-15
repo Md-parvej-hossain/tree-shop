@@ -9,6 +9,7 @@ import { MdOutlineShoppingBag } from 'react-icons/md';
 import { useState } from 'react';
 import CartSidebar from '../../components/Home/CartSidebar/CartSidebar';
 import useGetApi from '../../hooks/useGetApi';
+import Trending from '../../components/Home/Trending/Trending';
 const Home = () => {
   const [open, setOpen] = useState(false);
   const { data = [] } = useGetApi('cards', '/cards');
@@ -42,6 +43,7 @@ const Home = () => {
         <Plants />
         <BestProducts />
         <TopRatedProducts />
+        <Trending/>
         <Articles />
       </div>
       <CartSidebar open={open} setOpen={setOpen} />

@@ -1,7 +1,21 @@
-import React from 'react';
 import BestProductCard from './BestProductCard';
+import useGetSingleApi from '../../../hooks/useSingaleDataApi';
 
 const BestProducts = () => {
+  const type = 'Best Seller';
+  const {
+    data: typeData = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetSingleApi(['type', type], `/plantes/type/${type}`, {
+    enabled: !!type,
+  });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>{error.message}</p>;
+
+  console.log(typeData);
   return (
     <div>
       <div className="text-center items-center my-5">
@@ -10,11 +24,9 @@ const BestProducts = () => {
         </h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
-        <BestProductCard />
-        <BestProductCard />
-        <BestProductCard />
-        <BestProductCard />
-        <BestProductCard />
+        {typeData.map(item => (
+          <BestProductCard key={item._id} data={item} />
+        ))}
       </div>
     </div>
   );

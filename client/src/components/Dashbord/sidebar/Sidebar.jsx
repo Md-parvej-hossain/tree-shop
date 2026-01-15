@@ -13,6 +13,7 @@ import { MdPendingActions } from 'react-icons/md';
 import useAuth from '../../../hooks/useAuth';
 const Sidebar = () => {
   const { logOut } = useAuth();
+ 
   return (
     <div className="drawer-side shadow-lg shadow-green-600 ">
       <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
@@ -46,6 +47,7 @@ const Sidebar = () => {
               <VscVmActive /> ActiveSeller
             </NavLink>
           </li>
+         
           <li>
             <NavLink to="/dashboard/pendingSeller">
               <MdPendingActions /> PendingSeller
@@ -71,6 +73,7 @@ const Sidebar = () => {
             </button>
           </li>
         </ul>
+     
       </aside>
     </div>
   );

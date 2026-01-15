@@ -4,7 +4,7 @@ import { FaEye, FaRegStar, FaShoppingCart, FaStar } from 'react-icons/fa';
 import PlantCardModel from '../../Model/PlantCardModel/PlantCardModel';
 import CartSidebar from '../CartSidebar/CartSidebar';
 
-const TopRatedProductsCard = ({ data }) => {
+const TrendingCard = ({ data }) => {
   const max = 5;
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -99,4 +99,4 @@ const TopRatedProductsCard = ({ data }) => {
   );
 };
 
-export default TopRatedProductsCard;
+export default TrendingCard;

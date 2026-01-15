@@ -64,10 +64,17 @@ exports.deletePlantes = async (req, res) => {
 exports.getPlantesByCategory = async (req, res) => {
   try {
     const { category } = req.params;
-    console.log('Category:', category);
     const plantes = await Plantes.find({ category });
-
     res.status(200).json(plantes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.getPlantsByType = async (req, res) => {
+  try {
+    const { type } = req.params;
+    const plants = await Plantes.find({ type });
+    res.status(200).json(plants);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

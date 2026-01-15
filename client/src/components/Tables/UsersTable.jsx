@@ -60,8 +60,8 @@ const UsersTable = ({ users, onDelete }) => {
                   <span
                     className={`badge ${
                       userData.status === 'active'
-                        ? 'badge-info'
-                        : 'badge-error'
+                        ? 'bg-green-200'
+                        : 'bg-green-200'
                     }`}
                   >
                     {userData.status}

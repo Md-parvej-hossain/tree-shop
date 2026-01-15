@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import usePostApi from '../../../hooks/usePostApi';
+import { useState } from 'react';
 import { FaEye, FaRegStar, FaShoppingCart, FaStar } from 'react-icons/fa';
-import PlantCardModel from '../../Model/PlantCardModel/PlantCardModel';
-import CartSidebar from '../CartSidebar/CartSidebar';
+import PlantCardModel from '../../components/Model/PlantCardModel/PlantCardModel';
+import CartSidebar from '../../components/Home/CartSidebar/CartSidebar';
+import usePostApi from '../../hooks/usePostApi';
 
-const TopRatedProductsCard = ({ data }) => {
+const ShopCard = ({ plants }) => {
+  console.log(plants);
   const max = 5;
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -16,11 +17,11 @@ const TopRatedProductsCard = ({ data }) => {
 
   // Function to handle add to cart click
   const handleAddToCart = async () => {
-    if (!data?._id) return; // safety check
+    if (!plants?._id) return; // safety check
     await mutate({
-      name: data.name,
-      image: data.image,
-      price: data.newPrice,
+      name: plants.name,
+      image: plants.image,
+      price: plants.newPrice,
       quantity: 1,
     });
   };
@@ -30,18 +31,18 @@ const TopRatedProductsCard = ({ data }) => {
       <div className="relative">
         <figure className="px-10 pt-10">
           <img
-            src={data.image}
+            src={plants.image}
             referrerPolicy="no-referrer"
             alt="Plant"
             className="rounded-xl transition-all duration-500 
-                  group-hover:scale-110 group-hover:opacity-50 w-[250px] h-[180px] object-cover"
+              group-hover:scale-110 group-hover:opacity-50 w-[250px] h-[180px] object-cover"
           />
         </figure>
 
         {/* Center Icons */}
         <div
           className="absolute inset-0 flex items-center justify-center gap-4
-              opacity-0 group-hover:opacity-100 transition duration-700"
+          opacity-0 group-hover:opacity-100 transition duration-700"
         >
           <button
             title="Quick View"
@@ -62,12 +63,12 @@ const TopRatedProductsCard = ({ data }) => {
 
       {/* Card Body */}
       <div className="card-body items-center text-center">
-        <h2 className="card-title">{data.name}</h2>
+        <h2 className="card-title">{plants.name}</h2>
 
         {/* Rating */}
         <div className="flex gap-1 text-yellow-400">
           {[...Array(max)].map((_, index) =>
-            index < data.rating ? (
+            index < plants.rating ? (
               <FaStar key={index} />
             ) : (
               <FaRegStar key={index} className="text-gray-300" />
@@ -79,10 +80,10 @@ const TopRatedProductsCard = ({ data }) => {
         <div className="card-actions text-black font-semibold text-lg">
           <div className="inline-flex items-center gap-2  px-4 py-2  ">
             <span className="text-gray-400 line-through text-sm">
-              ${data.oldPrice}
+              ${plants.oldPrice}
             </span>
             <span className="text-green-600 font-semibold text-lg">
-              ${data.newPrice}
+              ${plants.newPrice}
             </span>
           </div>
         </div>
@@ -91,7 +92,7 @@ const TopRatedProductsCard = ({ data }) => {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           onClose={onClose}
-          id={data._id}
+          id={plants._id}
         />
       </div>
       <CartSidebar open={open} setOpen={setOpen} />
@@ -99,4 +100,4 @@ const TopRatedProductsCard = ({ data }) => {
   );
 };
 
-export default TopRatedProductsCard;
+export default ShopCard;

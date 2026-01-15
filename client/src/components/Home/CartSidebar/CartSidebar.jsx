@@ -8,7 +8,6 @@ import { toast } from 'react-hot-toast';
 
 export default function CartSidebar({ open, setOpen }) {
   const { data = [], isLoading, isError, error } = useGetApi('cards', '/cards');
-  console.log(data);
   const subtotal = data.reduce(
     (total, item) => total + item.price * item.quantity,
     0

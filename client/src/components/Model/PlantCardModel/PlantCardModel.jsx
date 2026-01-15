@@ -26,14 +26,15 @@ const PlantCardModel = ({ isOpen, onClose, id }) => {
     rating,
     quantity,
     category,
-    type,
   } = plant || {};
   console.log(plant);
   const { mutate } = usePostApi('/cards', {
     successMessage: 'Card added successfully',
     invalidateKey: 'card',
   });
-
+  if (qty === quantity) {
+    toast.error('Not enough stock available');
+  }
   // Function to handle add to cart click
   const handleAddToCart = async () => {
     if (!plant?._id) return; // safety check
@@ -48,9 +49,7 @@ const PlantCardModel = ({ isOpen, onClose, id }) => {
   };
 
   const totalPrice = qty * newPrice;
-  if (qty === quantity) {
-    toast.error('Not enough stock available');
-  }
+
   if (!isOpen) return null;
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>{error.message}</p>;
