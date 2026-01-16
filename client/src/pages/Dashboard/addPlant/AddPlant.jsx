@@ -67,10 +67,14 @@ const AddPlant = () => {
             </label>
             <select name="category" required className="select select-bordered">
               <option value="">Select category</option>
+              <option value="Flower">Flower</option>
               <option value="Indoor">Indoor</option>
               <option value="Outdoor">Outdoor</option>
+              <option value="Fruit">Fruit</option>
+              <option value="Air">Air</option>
               <option value="Succulent">Succulent</option>
-              <option value="Flower">Flower</option>
+              <option value="Medicinal">Medicinal</option>
+              <option value="Bonsai">Bonsai</option>
             </select>
           </div>
           {/* New Price */}

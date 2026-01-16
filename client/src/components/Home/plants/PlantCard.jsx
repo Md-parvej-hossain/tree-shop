@@ -95,7 +95,7 @@ const PlantCard = ({ plants }) => {
           id={plants._id}
         />
       </div>
-      <CartSidebar open={open} setOpen={setOpen} />
+      <CartSidebar open={open} setOpen={setOpen}  />
     </div>
   );
 };

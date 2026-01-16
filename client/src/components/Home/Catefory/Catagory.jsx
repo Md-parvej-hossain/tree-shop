@@ -2,6 +2,7 @@ import useGetSingleApi from '../../../hooks/useSingaleDataApi';
 import { useParams } from 'react-router';
 import { FadeLoader } from 'react-spinners';
 import CategoryCard from './CategoryCard';
+import EmptyState from '../../Shared/EmptyState/EmptyState';
 
 const Catagory = () => {
   const { categoryName } = useParams();
@@ -17,6 +18,7 @@ const Catagory = () => {
       enabled: !!categoryName,
     }
   );
+  if (categorysData.length === 0) return <EmptyState />;
   if (isLoading) return <FadeLoader />;
   if (isError) return <p>{error.message}</p>;
   return (

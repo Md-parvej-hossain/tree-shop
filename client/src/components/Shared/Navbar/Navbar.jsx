@@ -135,19 +135,28 @@ const Navbar = () => {
                     </summary>
                     <ul className="p-2 bg-green-100 w-40 text-gray-800  z-20">
                       <li>
-                        <a>Flowering Plants</a>
+                        <Link to="/category/Flower">Flower Plants</Link>
                       </li>
                       <li>
-                        <a>Indoor Plants</a>
+                        <Link to="/category/Indoor">Indoor Plants</Link>
                       </li>
                       <li>
-                        <a>Medicinal Plants</a>
+                        <Link to="/category/Outdoor">Outdoor Plants</Link>
                       </li>
                       <li>
-                        <a>Herbs</a>
+                        <Link to="/category/Fruit">Fruit Plants</Link>
                       </li>
                       <li>
-                        <a>Succulent Plants</a>
+                        <Link to="/category/Air">Air Plants</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/Succulent">Succulent Plants</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/Medicinal">Medicinal Plants</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/Bonsai">Bonsai Plants</Link>
                       </li>
                     </ul>
                   </details>

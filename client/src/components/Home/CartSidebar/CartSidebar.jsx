@@ -48,7 +48,7 @@ export default function CartSidebar({ open, setOpen }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed right-0 top-0 h-full w-full sm:w-[380px] bg-base-100 z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 h-full w-full sm:w-[380px] bg-base-100 z-50 shadow-sm transform transition-transform duration-300 ease-in-out ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
