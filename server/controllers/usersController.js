@@ -80,3 +80,13 @@ exports.deleteUser = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+// Get user role
+exports.getUserRole = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    res.send({ role: user?.role || 'customer' });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

@@ -11,9 +11,11 @@ import { MdOutlineBorderAll } from 'react-icons/md';
 import { VscVmActive } from 'react-icons/vsc';
 import { MdPendingActions } from 'react-icons/md';
 import useAuth from '../../../hooks/useAuth';
+import useRole from '../../../hooks/useRole';
 const Sidebar = () => {
   const { logOut } = useAuth();
- 
+  const role = useRole();
+  console.log(role);
   return (
     <div className="drawer-side shadow-lg shadow-green-600 ">
       <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
@@ -47,7 +49,7 @@ const Sidebar = () => {
               <VscVmActive /> ActiveSeller
             </NavLink>
           </li>
-         
+
           <li>
             <NavLink to="/dashboard/pendingSeller">
               <MdPendingActions /> PendingSeller
@@ -73,7 +75,6 @@ const Sidebar = () => {
             </button>
           </li>
         </ul>
-     
       </aside>
     </div>
   );

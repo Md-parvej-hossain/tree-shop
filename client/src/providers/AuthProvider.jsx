@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { app } from '../firebase/firebase.config';
+import axios from 'axios';
 // import axios from 'axios';
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -48,34 +49,34 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  // onAuthStateChange
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-      console.log('CurrentUser-->', currentUser);
-      // if (currentUser?.email) {
-      //   setUser(currentUser);
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+    try {
+      if (currentUser?.email) {
+        setUser(currentUser);
 
-      //   // Get JWT token
-      //   await axios.post(
-      //     `${import.meta.env.VITE_API_URL}/jwt`,
-      //     {
-      //       email: currentUser?.email,
-      //     },
-      //     { withCredentials: true }
-      //   );
-      // } else {
-      //   setUser(currentUser);
-      //   await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-      //     withCredentials: true,
-      //   });
-      // }
-      setUser(currentUser);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/jwt`,
+          { email: currentUser.email },
+          { withCredentials: true },
+        );
+      } else {
+        setUser(null);
+
+        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+          withCredentials: true,
+        });
+      }
+    } catch (error) {
+      console.error('Auth sync error:', error.message);
+    } finally {
       setLoading(false);
-    });
-    return () => {
-      return unsubscribe();
-    };
-  }, []);
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
+
 
   const authInfo = {
     user,

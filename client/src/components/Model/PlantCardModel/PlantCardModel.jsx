@@ -27,7 +27,6 @@ const PlantCardModel = ({ isOpen, onClose, id }) => {
     quantity,
     category,
   } = plant || {};
-  console.log(plant);
   const { mutate } = usePostApi('/cards', {
     successMessage: 'Card added successfully',
     invalidateKey: 'card',
@@ -99,7 +98,7 @@ const PlantCardModel = ({ isOpen, onClose, id }) => {
                   <FaStar key={index} />
                 ) : (
                   <FaRegStar key={index} className="text-gray-300" />
-                )
+                ),
               )}
             </div>
             {/* Category */}

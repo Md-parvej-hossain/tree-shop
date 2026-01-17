@@ -11,9 +11,11 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).send({ message: 'Unauthorized access' });
     }
-    req.user = decoded;
+
+    req.user = decoded; // { email }
     next();
   });
 };
 
 module.exports = verifyToken;
+

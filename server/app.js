@@ -1,24 +1,28 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
-// Middlewares
+// CORS
 const corsOptions = {
   origin: ['http://localhost:5173', 'http://localhost:5174'],
   credentials: true,
-  optionSuccessStatus: 200,
+  optionsSuccessStatus: 200,
 };
+
 app.use(cors(corsOptions));
+
+// ✅ MUST come BEFORE routes
 app.use(express.json());
+app.use(cookieParser());
 
-// user routes
-app.use('/api', require('./routes/userRoutes'));
-
-// plant routes
-app.use('/api', require('./routes/plantRoutes'));
 // Routes
+app.use('/api', require('./routes/userRoutes'));
+app.use('/api', require('./routes/plantRoutes'));
 app.use('/api', require('./routes/addToCartRoutes'));
+app.use('/api', require('./routes/authRouts'));
+
 // Health check
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running' });

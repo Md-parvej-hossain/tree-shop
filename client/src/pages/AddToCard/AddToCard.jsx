@@ -10,7 +10,7 @@ const AddToCart = () => {
   const { data = [], isLoading, isError, error } = useGetApi('cards', '/cards');
   const subtotal = data.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
   const deletePlant = useDeleteApi('/cards', {
     invalidateKey: 'cards',
