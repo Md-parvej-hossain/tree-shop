@@ -1,7 +1,5 @@
-import { useState } from 'react';
 
 const Blog = () => {
-  const [search, setSearch] = useState('');
 
   const blogs = [
     {
@@ -51,23 +49,7 @@ const Blog = () => {
 
       {/* CONTENT */}
       <div className="container mx-auto px-4 py-16">
-        {/* SEARCH & FILTER */}
-        <div className="flex flex-col md:flex-row gap-4 justify-between mb-10">
-          <input
-            type="text"
-            placeholder="Search blog..."
-            className="input input-bordered w-full md:max-w-sm"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-
-          <select className="select select-bordered w-full md:max-w-xs">
-            <option>All Categories</option>
-            <option>Health</option>
-            <option>Decoration</option>
-            <option>Care</option>
-          </select>
-        </div>
+       
 
         {/* BLOG GRID */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -108,38 +90,8 @@ const Blog = () => {
             </div>
           ))}
         </div>
-
-        {/* PAGINATION */}
-        <div className="flex justify-center mt-16">
-          <div className="join">
-            <button className="join-item btn btn-outline">Prev</button>
-            <button className="join-item btn btn-active">1</button>
-            <button className="join-item btn btn-outline">2</button>
-            <button className="join-item btn btn-outline">Next</button>
-          </div>
-        </div>
       </div>
 
-      {/* NEWSLETTER */}
-      <div className="bg-base-200 py-16">
-        <div className="container mx-auto px-4 text-center max-w-xl">
-          <h3 className="text-2xl font-semibold mb-3">
-            Subscribe to Our Newsletter
-          </h3>
-          <p className="text-sm text-gray-500 mb-6">
-            Get the latest articles and updates straight to your inbox.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="input input-bordered w-full"
-            />
-            <button className="btn btn-success">Subscribe</button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -5,8 +5,6 @@ import CartSidebar from '../CartSidebar/CartSidebar';
 import usePostApi from '../../../hooks/usePostApi';
 
 const PlantCard = ({ plants }) => {
-  console.log(plants);
-  const max = 5;
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const onClose = () => setIsOpen(false);
@@ -14,7 +12,9 @@ const PlantCard = ({ plants }) => {
     successMessage: 'Card added successfully',
     invalidateKey: 'card',
   });
-
+  const reflase = reflase => {
+    reflase()
+  };
   // Function to handle add to cart click
   const handleAddToCart = async () => {
     if (!plants?._id) return; // safety check
@@ -24,25 +24,23 @@ const PlantCard = ({ plants }) => {
       price: plants.newPrice,
       quantity: 1,
     });
+    reflase()
   };
   return (
-    <div className="card bg-base-100 group shadow-sm overflow-hidden">
-      {/* Image Wrapper */}
-      <div className="relative">
-        <figure className="px-10 pt-10">
-          <img
-            src={plants.image}
-            referrerPolicy="no-referrer"
-            alt="Plant"
-            className="rounded-xl transition-all duration-500 
-              group-hover:scale-110 group-hover:opacity-50 w-[250px] h-[180px] object-cover"
-          />
-        </figure>
+    <div className="group relative bg-base-100  shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+      {/* Image Section */}
+      <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
+        <img
+          src={plants.image}
+          alt={plants.name}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
 
-        {/* Center Icons */}
+        {/* Overlay */}
         <div
           className="absolute inset-0 flex items-center justify-center gap-4
-          opacity-0 group-hover:opacity-100 transition duration-700"
+                opacity-0 group-hover:opacity-100 transition duration-700"
         >
           <button
             title="Quick View"
@@ -61,41 +59,44 @@ const PlantCard = ({ plants }) => {
         </div>
       </div>
 
-      {/* Card Body */}
-      <div className="card-body items-center text-center">
-        <h2 className="card-title">{plants.name}</h2>
+      {/* Content Section */}
+      <div className="p-4 text-center space-y-2">
+        {/* Title */}
+        <h2 className="text-lg font-semibold text-base-content truncate">
+          {plants.name}
+        </h2>
 
         {/* Rating */}
-        <div className="flex gap-1 text-yellow-400">
-          {[...Array(max)].map((_, index) =>
+        <div className="flex justify-center gap-1">
+          {[...Array(5)].map((_, index) =>
             index < plants.rating ? (
-              <FaStar key={index} />
+              <FaStar key={index} className="text-yellow-400 text-sm" />
             ) : (
-              <FaRegStar key={index} className="text-gray-300" />
+              <FaRegStar key={index} className="text-gray-300 text-sm" />
             )
           )}
         </div>
 
         {/* Price */}
-        <div className="card-actions text-black font-semibold text-lg">
-          <div className="inline-flex items-center gap-2  px-4 py-2  ">
-            <span className="text-gray-400 line-through text-sm">
-              ${plants.oldPrice}
-            </span>
-            <span className="text-green-600 font-semibold text-lg">
-              ${plants.newPrice}
-            </span>
-          </div>
+        <div className="flex justify-center items-center gap-2">
+          <span className="text-sm text-gray-400 line-through">
+            ${plants.oldPrice}
+          </span>
+          <span className="text-lg font-bold text-green-600">
+            ${plants.newPrice}
+          </span>
         </div>
-        {/* PlantCardModel */}
-        <PlantCardModel
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          onClose={onClose}
-          id={plants._id}
-        />
       </div>
-      <CartSidebar open={open} setOpen={setOpen}  />
+
+      {/* Modals */}
+      <PlantCardModel
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={onClose}
+        id={plants._id}
+      />
+
+      <CartSidebar open={open} setOpen={setOpen} reflase={reflase} />
     </div>
   );
 };

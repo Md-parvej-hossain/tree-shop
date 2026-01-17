@@ -27,7 +27,29 @@ const Home = () => {
         />
         <link rel="canonical" href="https://yourwebsite.com/" />
       </Helmet> */}
+      
+              {/* Center Icons */}
+              {/* <div
+                className="absolute inset-0 flex items-center justify-center gap-4
+                opacity-0 group-hover:opacity-100 transition duration-700"
+              >
+                <button
+                  title="Quick View"
+                  className="  bg-green-400 text-white hover:bg-white hover:text-green-400 rounded-full p-2   cursor-pointer "
+                >
+                  <FaEye size={25} onClick={() => setIsOpen(true)} />
+                </button>
+      
+                <button
+                  onClick={handleAddToCart}
+                  title="Add To Card"
+                  className="   bg-green-500 text-white hover:bg-white hover:text-green-500 rounded-full p-2   cursor-pointer "
+                >
+                  <FaShoppingCart onClick={() => setOpen(true)} size={25} />
+                </button>
+              </div> */}
       <div
+        
         onClick={() => setOpen(true)}
         className="fixed absolute z-50 bottom-96 -right-0 bg-green-50 hover:bg-green-200"
       >

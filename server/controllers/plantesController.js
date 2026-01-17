@@ -11,14 +11,43 @@ exports.createPlantes = async (req, res) => {
 };
 
 // GET all plants
+// exports.getPlantes = async (req, res) => {
+//   try {
+//     const plantes = await Plantes.find();
+//     res.status(200).json(plantes);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+// controllers/plantesController.js
 exports.getPlantes = async (req, res) => {
   try {
-    const plantes = await Plantes.find();
-    res.status(200).json(plantes);
+    const page = parseInt(req.query.page) || 1;   // current page
+    const limit = parseInt(req.query.limit) || 10; // items per page
+    const skip = (page - 1) * limit;
+
+    const total = await Plantes.countDocuments();
+
+    const plantes = await Plantes.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: plantes,
+      pagination: {
+        totalItems: total,
+        totalPages: Math.ceil(total / limit),
+        currentPage: page,
+        limit,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 // GET single plant
 exports.getPlantesById = async (req, res) => {
   try {

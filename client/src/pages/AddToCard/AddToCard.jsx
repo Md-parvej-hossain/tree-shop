@@ -3,45 +3,45 @@ import useGetApi from '../../hooks/useGetApi';
 import useDeleteApi from '../../hooks/useDeleatApi';
 import toast from 'react-hot-toast';
 import { FadeLoader } from 'react-spinners';
+import EmptyState from '../../components/Shared/EmptyState/EmptyState';
 
 const AddToCart = () => {
   const navigate = useNavigate();
- const { data = [], isLoading, isError, error } = useGetApi('cards', '/cards');
- const subtotal = data.reduce(
-   (total, item) => total + item.price * item.quantity,
-   0
- );
- const deletePlant = useDeleteApi('/cards', {
-   invalidateKey: 'cards',
-   successMessage: 'Cards deleted successfully',
- });
- const handleDelete = id => {
-   deletePlant.mutate(id, {
-     onSuccess: () => toast.success('Item removed from cart'),
-   });
- };
-console.log(data);
- if (isLoading)
-   return (
-     <div className="flex justify-center py-10">
-       <FadeLoader />
-     </div>
-   );
+  const { data = [], isLoading, isError, error } = useGetApi('cards', '/cards');
+  const subtotal = data.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const deletePlant = useDeleteApi('/cards', {
+    invalidateKey: 'cards',
+    successMessage: 'Cards deleted successfully',
+  });
+  const handleDelete = id => {
+    deletePlant.mutate(id, {
+      onSuccess: () => toast.success('Item removed from cart'),
+    });
+  };
+  console.log(data);
+  if (isLoading)
+    return (
+      <div className="flex justify-center py-10">
+        <FadeLoader />
+      </div>
+    );
 
- if (isError)
-   return <p className="text-red-600 text-center">{error?.message}</p>;
- if (data.length === 0)
-   return <p className="text-center py-10">Your cart is empty</p>;
-  const cartItems = [
-    { id: 1, name: 'Aliquam Vel', price: 30, qty: 4, image: '/plant1.png' },
-    { id: 2, name: 'Aliquam Vel', price: 30, qty: 3, image: '/plant2.png' },
-    { id: 3, name: 'Aliquam Vel', price: 30, qty: 3, image: '/plant3.png' },
-  ];
+  if (isError)
+    return <p className="text-red-600 text-center">{error?.message}</p>;
+  if (data.length === 0)
+    return (
+      <p className="text-center py-10">
+        <EmptyState />
+      </p>
+    );
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-xl font-semibold mb-6">
-        Selected Item : {cartItems.length}
+        Selected Item : {data.length}
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -113,8 +113,6 @@ console.log(data);
               <span>${subtotal + 50}</span>
             </div>
           </div>
-
-          
 
           <div className="text-center space-y-3">
             <p className="text-sm">Are you sure you want to order?</p>

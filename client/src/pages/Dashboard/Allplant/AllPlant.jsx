@@ -53,7 +53,7 @@ const AllPlant = () => {
 
   return (
     <div>
-      <AllPlantsTable plants={data} onDelete={handleDelete} />
+      <AllPlantsTable plants={data.data} onDelete={handleDelete} />
     </div>
   );
 };

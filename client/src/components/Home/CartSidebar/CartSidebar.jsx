@@ -6,12 +6,19 @@ import { FadeLoader } from 'react-spinners';
 import useDeleteApi from '../../../hooks/useDeleatApi';
 import { toast } from 'react-hot-toast';
 
-export default function CartSidebar({ open, setOpen }) {
-  const { data = [], isLoading, isError, error } = useGetApi('cards', '/cards');
+export default function CartSidebar({ open, setOpen, reflase }) {
+  const {
+    data = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetApi('cards', '/cards');
   const subtotal = data.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+  reflase = refetch();
   const deletePlant = useDeleteApi('/cards', {
     invalidateKey: 'cards',
     successMessage: 'Cards deleted successfully',
@@ -20,6 +27,7 @@ export default function CartSidebar({ open, setOpen }) {
     deletePlant.mutate(id, {
       onSuccess: () => toast.success('Item removed from cart'),
     });
+    refetch();
   };
 
   if (isLoading)
@@ -36,8 +44,6 @@ export default function CartSidebar({ open, setOpen }) {
 
   return (
     <>
-    
-
       {/* Overlay */}
       <div
         onClick={() => setOpen(false)}
