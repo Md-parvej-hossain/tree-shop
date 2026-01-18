@@ -33,29 +33,32 @@ const UpdatePlant = () => {
     type,
   } = plant || {};
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const form = e.target;
-    const imageFile = form.image.files[0];
-    // 🔹 Upload image to ImgBB
-    const imageUrl = await uploadImage(imageFile);
-    const formData = new FormData(form);
-    const plantInfo = {
-      name: formData.get('name'),
-      image: imageUrl,
-      newPrice: formData.get('newPrice'),
-      oldPrice: formData.get('oldPrice'),
-      description: formData.get('description'),
-      rating: formData.get('rating'),
-      quantity: formData.get('quantity'),
-      category: formData.get('category'),
-    };
-    console.log(plantInfo);
-    // Call mutation
-    updatePlant.mutate({ id, data: plantInfo });
-    console.log(plantInfo);
-    form.reset();
-  };
+ const handleSubmit = async e => {
+   e.preventDefault();
+   const form = e.target;
+
+   let imageUrl = image;
+   if (form.image.files.length > 0) {
+     imageUrl = await uploadImage(form.image.files[0]);
+   }
+
+   const formData = new FormData(form);
+
+   const plantInfo = {
+     name: formData.get('name'),
+     image: imageUrl,
+     newPrice: Number(formData.get('newPrice')),
+     oldPrice: Number(formData.get('oldPrice')),
+     description: formData.get('description'),
+     rating: Number(formData.get('rating')),
+     quantity: Number(formData.get('quantity')),
+     category: formData.get('category'),
+     type: formData.get('type'),
+   };
+
+   updatePlant.mutate({ id, data: plantInfo });
+ };
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>{error.message}</p>;
   return (

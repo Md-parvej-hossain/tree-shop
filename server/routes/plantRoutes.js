@@ -15,9 +15,14 @@ router.delete('/plantes/:id', plantesController.deletePlantes);
 // get plants by category
 router.get(
   '/plantes/category/:category',
-  plantesController.getPlantesByCategory
+  plantesController.getPlantesByCategory,
 );
 // get plants by type
 router.get('/plantes/type/:type', plantesController.getPlantsByType);
+// increment quantity
+router.patch('/plantes/:id/increment', plantesController.incrementQuantity);
+
+// decrement quantity
+router.patch('/plantes/:id/decrement', plantesController.decrementQuantity);
 
 module.exports = router;

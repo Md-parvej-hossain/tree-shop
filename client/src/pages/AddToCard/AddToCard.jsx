@@ -21,7 +21,6 @@ const AddToCart = () => {
       onSuccess: () => toast.success('Item removed from cart'),
     });
   };
-  console.log(data);
   if (isLoading)
     return (
       <div className="flex justify-center py-10">
@@ -65,14 +64,13 @@ const AddToCart = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex items-center border rounded">
-                  <button className="px-3 py-1 text-lg">−</button>
-                  <span className="px-4">{item.quantity}</span>
-                  <button className="px-3 py-1 text-lg">+</button>
+                <div>
+                  <p className="text-black font-medium ">
+                    Quantity : {item.quantity}
+                  </p>
                 </div>
-
-                <p className="font-semibold w-16 text-right">
-                  ${item.price * item.quantity}
+                <p className="font-semibold w-16 text-right flex">
+                  Total : ${item.price * item.quantity}
                 </p>
 
                 <button

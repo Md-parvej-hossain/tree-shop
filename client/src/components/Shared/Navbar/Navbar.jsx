@@ -9,11 +9,15 @@ import Profail from './Profail';
 import useAuth from '../../../hooks/useAuth';
 import './Navbar.css';
 import useGetApi from '../../../hooks/useGetApi';
+import BecomeASellerModal from '../../From/BecomeASellerModal';
 const Navbar = () => {
   const { user } = useAuth();
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
-
+  let [isOpenModal, setIsOpenModal] = useState(false);
+  function closeModal() {
+    setIsOpenModal(false);
+  }
   const { data = [] } = useGetApi('cards', '/cards');
   const count = data.length;
   return (
@@ -105,13 +109,15 @@ const Navbar = () => {
               >
                 Shop (All Products)
               </NavLink>
-              <NavLink
-                className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
+              {user && (
+                <Link
+                  onClick={() => setIsOpenModal(true)}
+                  className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
-                to="packages"
-              >
-                Packages
-              </NavLink>
+                >
+                  Become a Seller
+                </Link>
+              )}
               <NavLink
                 className="px-2 py-2 mx-2 mt-2 font-semibold text-gray-950 rounded-md transition-colors duration-300 hover:text-green-600
                      lg:mt-0"
@@ -126,7 +132,11 @@ const Navbar = () => {
               >
                 Contact Us
               </NavLink>
-
+              {/* become a seller modal  */}
+              <BecomeASellerModal
+                isOpenModal={isOpenModal}
+                closeModal={closeModal}
+              />
               <ul className="menu menu-horizontal px-1">
                 <li>
                   <details>

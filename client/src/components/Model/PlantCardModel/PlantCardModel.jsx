@@ -4,9 +4,10 @@ import { Link } from 'react-router';
 import useGetSingleApi from '../../../hooks/useSingaleDataApi';
 import usePostApi from '../../../hooks/usePostApi';
 import toast from 'react-hot-toast';
+import usePatchApi from '../../../hooks/usePatchApi';
 
 const PlantCardModel = ({ isOpen, onClose, id }) => {
-  const [qty, setQty] = useState(2); // for cart quantity
+  const [qty, setQty] = useState(1); // for cart quantity
   // local copy of plant.quantity
 
   const {
@@ -31,20 +32,27 @@ const PlantCardModel = ({ isOpen, onClose, id }) => {
     successMessage: 'Card added successfully',
     invalidateKey: 'card',
   });
-  if (qty === quantity) {
-    toast.error('Not enough stock available');
-  }
+  const { mutate: incrementQty } = usePatchApi(`/plantes/${id}/increment`, {
+    successMessage: null, // no toast spam
+    invalidateKey: ['plant', id],
+  });
+
+  const { mutate: decrementQty } = usePatchApi(`/plantes/${id}/decrement`, {
+    successMessage: null,
+    invalidateKey: ['plant', id],
+  });
+
   // Function to handle add to cart click
   const handleAddToCart = async () => {
-    if (!plant?._id) return; // safety check
+    if (!plant?._id) return;
+
     await mutate({
+      plantId: plant._id,
       name,
       image,
       price: newPrice,
-      quantity: qty, // your selected quantity
+      quantity: qty,
     });
-
-    console.log('Added:', name, image, qty);
   };
 
   const totalPrice = qty * newPrice;
@@ -112,17 +120,26 @@ const PlantCardModel = ({ isOpen, onClose, id }) => {
               <div className="flex items-center border rounded-md overflow-hidden">
                 <button
                   onClick={() => {
-                    setQty(qty > 1 ? qty - 1 : 1);
+                    if (qty > 1) {
+                      setQty(qty - 1);
+                      decrementQty();
+                    }
                   }}
                   className="px-4 py-1 text-xl cursor-pointer"
                 >
                   −
                 </button>
+
                 <span className="px-4 py-1">{qty}</span>
                 <button
                   disabled={qty === quantity}
                   onClick={() => {
-                    setQty(qty + 1);
+                    if (qty < quantity) {
+                      setQty(qty + 1);
+                      incrementQty();
+                    } else {
+                      toast.error('Not enough stock available');
+                    }
                   }}
                   className="px-4 py-1 text-xl cursor-pointer"
                 >

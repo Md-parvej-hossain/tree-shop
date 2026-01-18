@@ -10,16 +10,6 @@ exports.createPlantes = async (req, res) => {
   }
 };
 
-// GET all plants
-// exports.getPlantes = async (req, res) => {
-//   try {
-//     const plantes = await Plantes.find();
-//     res.status(200).json(plantes);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-// controllers/plantesController.js
 exports.getPlantes = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;   // current page
@@ -108,3 +98,54 @@ exports.getPlantsByType = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+//incrementQuantity
+exports.incrementQuantity = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const plant = await Plantes.findByIdAndUpdate(
+      id,
+      { $inc: { quantity: -1 } },
+      { new: true },
+    );
+
+    if (!plant) {
+      return res.status(404).json({ message: 'Plant not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Quantity increased',
+      data: plant,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+//decrementQuantity
+exports.decrementQuantity = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const plant = await Plantes.findOneAndUpdate(
+      { _id: id, quantity: { $gt: 1 } }, // prevent quantity < 1
+      { $inc: { quantity: 1 } },
+      { new: true },
+    );
+
+    if (!plant) {
+      return res.status(400).json({
+        message: 'Quantity cannot be less than 1',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Quantity decreased',
+      data: plant,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+

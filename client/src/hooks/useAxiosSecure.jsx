@@ -1,31 +1,33 @@
-// hooks/useAxiosSecure.js
 import axios from 'axios';
-import useAuth from './useAuth'; // your auth hook for token
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import useAuth from './useAuth';
+
+export const axiosSecure = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true,
+});
 
 const useAxiosSecure = () => {
-  const { user, getToken } = useAuth(); // Assume getToken() returns JWT
-
-  const axiosSecure = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}`, 
-    headers: {
-      'Content-Type': 'application/json',
-
-    },
-    withCredentials: false, 
-  });
-
-  // Add token to each request
-  axiosSecure.interceptors.request.use(
-    async config => {
-      const token = await getToken(); // get JWT token
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    error => Promise.reject(error)
-  );
-
+  const navigate = useNavigate();
+  const { logOut } = useAuth();
+  useEffect(() => {
+    axiosSecure.interceptors.response.use(
+      res => {
+        return res;
+      },
+      async error => {
+        //console.log('Error caught from axios interceptor-->', error.response);
+        if (error.response.status === 401 || error.response.status === 403) {
+          // logout
+          logOut();
+          // navigate to login
+          navigate('/login');
+        }
+        return Promise.reject(error);
+      },
+    );
+  }, [logOut, navigate]);
   return axiosSecure;
 };
 
