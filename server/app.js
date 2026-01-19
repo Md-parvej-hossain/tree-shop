@@ -22,7 +22,8 @@ app.use('/api', require('./routes/userRoutes'));
 app.use('/api', require('./routes/plantRoutes'));
 app.use('/api', require('./routes/addToCartRoutes'));
 app.use('/api', require('./routes/authRouts'));
-
+app.use('/api', require('./routes/sellerRequestRoutes'));
+app.use('api', require('./routes/paymentRoutes'));
 // Health check
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running' });

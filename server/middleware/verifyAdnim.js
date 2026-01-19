@@ -2,7 +2,7 @@ const { usersCollection } = require('../models/dbCollectionModel');
 const verifyAdmin = async (req, res, next) => {
   try {
     const email = req.user.email;
-    //console.log(email);
+    ////console.log(email);
     const user = await usersCollection.findOne({ email });
 
     if (!user || user.role !== 'Admin') {

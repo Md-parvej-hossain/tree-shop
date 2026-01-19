@@ -6,7 +6,31 @@ import {
   DialogTitle,
   DialogPanel,
 } from '@headlessui/react';
+import usePostApi from '../../hooks/usePostApi';
+import useAuth from './../../hooks/useAuth';
 const BecomeASellerModal = ({ isOpenModal, closeModal }) => {
+  const { user } = useAuth();
+  //console.log(user);
+  const { mutate, isLoading } = usePostApi('/seller-requests', {
+    successMessage: 'Seller added successfully',
+    invalidateKey: 'seller',
+  });
+
+  const handleSeller = async () => {
+    const sellerInfo = {
+      sellerImage: user?.photoURL,
+      email: user?.email,
+      name: user?.displayName,
+      shopName: 'plantNet',
+      status: 'pending',
+    };
+    //console.log(sellerInfo);
+    mutate(sellerInfo, {
+      onSuccess: () => {},
+    });
+    closeModal();
+  };
+  if (isLoading) return <p>Loading...</p>;
   return (
     <Transition appear show={isOpenModal} as={Fragment}>
       <Dialog as="div" className="relative z-20" onClose={closeModal}>
@@ -49,7 +73,7 @@ const BecomeASellerModal = ({ isOpenModal, closeModal }) => {
                 <hr className="mt-8 " />
                 <div className="flex mt-2 justify-around">
                   <button
-                    // onClick={handleRiderRequest}
+                    onClick={handleSeller}
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
                   >

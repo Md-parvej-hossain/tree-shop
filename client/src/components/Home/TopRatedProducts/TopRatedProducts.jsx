@@ -1,5 +1,6 @@
 import TopRatedProductsCard from './TopRatedProductsCard';
 import useGetSingleApi from '../../../hooks/useSingaleDataApi';
+import EmptyState from '../../Shared/EmptyState/EmptyState';
 
 const TopRatedProducts = () => {
   const topType = 'Top Rated';
@@ -14,6 +15,12 @@ const TopRatedProducts = () => {
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>{error.message}</p>;
+   if (typeData.length === 0)
+     return (
+       <p className="text-center py-10">
+         <EmptyState />
+       </p>
+     );
   return (
     <div>
       <div className="text-center items-center my-5">

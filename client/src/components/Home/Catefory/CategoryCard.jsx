@@ -71,7 +71,7 @@ const CategoryCard = ({ categoryData }) => {
               <FaStar key={index} />
             ) : (
               <FaRegStar key={index} className="text-gray-300" />
-            )
+            ),
           )}
         </div>
 

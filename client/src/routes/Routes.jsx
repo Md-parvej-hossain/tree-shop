@@ -8,7 +8,6 @@ import Blog from '../pages/Blogs/Blog';
 import ContactUs from '../pages/ContactUs/ContactUs';
 import Login from '../pages/Login/Login';
 import DashboardLayout from '../layouts/DashboardLayout';
-import Overview from '../pages/Dashboard/Overview/Overview';
 import Users from '../pages/Dashboard/user/Users';
 import AddToCard from '../pages/AddToCard/AddToCard';
 import SignUp from '../pages/SignUp/SignUp';
@@ -19,6 +18,9 @@ import ActiveSeller from '../pages/Dashboard/ActiveSeller/ActiveSeller';
 import PandingSeller from '../pages/Dashboard/PandingSaller/PandingSeller';
 import PrivateRoute from './PrivateRoutes';
 import Catagory from '../components/Home/Catefory/Catagory';
+import Analytics from '../pages/Dashboard/Analytics';
+import AdminRoute from '../providers/AdminRouts';
+import SellerRoutes from '../providers/SellerRoutes';
 
 const router = createBrowserRouter([
   {
@@ -74,31 +76,56 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Overview />,
+        element: <Analytics />,
       },
       {
         path: 'users',
-        element: <Users />,
+        element: (
+          <AdminRoute>
+            <Users />
+          </AdminRoute>
+        ),
       },
+
       {
         path: 'addPlant',
-        element: <AddPlant />,
+        element: (
+          <SellerRoutes>
+            <AddPlant />
+          </SellerRoutes>
+        ),
       },
       {
         path: 'upDatePlant/:id',
-        element: <UpdatePlant />,
+        element: (
+          <SellerRoutes>
+            <UpdatePlant />
+          </SellerRoutes>
+        ),
       },
       {
         path: 'activeSeller',
-        element: <ActiveSeller />,
+        element: (
+          <AdminRoute>
+            <ActiveSeller />
+          </AdminRoute>
+        ),
       },
       {
         path: 'pendingSeller',
-        element: <PandingSeller />,
+        element: (
+          <AdminRoute>
+            <PandingSeller />
+          </AdminRoute>
+        ),
       },
       {
         path: 'allPlant',
-        element: <AllPlant />,
+        element: (
+          <SellerRoutes>
+            <AllPlant />
+          </SellerRoutes>
+        ),
       },
       {
         path: 'settings',

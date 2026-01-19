@@ -5,7 +5,6 @@ import PlantCardModel from '../../Model/PlantCardModel/PlantCardModel';
 import CartSidebar from '../CartSidebar/CartSidebar';
 
 const BestProductCard = ({ data }) => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const onClose = () => setIsOpen(false);
@@ -27,8 +26,9 @@ const BestProductCard = ({ data }) => {
     });
     reflase();
   };
+
   return (
-    <div className="group relative bg-base-100  shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-base-100  shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" >
       {/* Image Section */}
       <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
         <img
@@ -74,7 +74,7 @@ const BestProductCard = ({ data }) => {
               <FaStar key={index} className="text-yellow-400 text-sm" />
             ) : (
               <FaRegStar key={index} className="text-gray-300 text-sm" />
-            )
+            ),
           )}
         </div>
 

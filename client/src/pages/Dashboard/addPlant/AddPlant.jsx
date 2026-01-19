@@ -27,7 +27,7 @@ const AddPlant = () => {
       category: formData.get('category'),
       type: formData.get('type'),
     };
-    console.log(plantInfo);
+    //console.log(plantInfo);
     // 🔹 Call POST API
     mutate(plantInfo, {
       onSuccess: () => {

@@ -4,7 +4,7 @@ import UsersTable from '../../../components/Tables/UsersTable';
 import Swal from 'sweetalert2';
 const Users = () => {
   const { data = [], isLoading, isError, error } = useGetApi('users', '/users');
-  console.log(data);
+  //console.log(data);
   const deleteUser = useDeleteApi('/users', {
     invalidateKey: 'users',
     successMessage: 'User deleted successfully',
@@ -26,7 +26,7 @@ const Users = () => {
             Swal.fire(
               'Deleted!',
               'User has been deleted successfully.',
-              'success'
+              'success',
             );
           },
         });

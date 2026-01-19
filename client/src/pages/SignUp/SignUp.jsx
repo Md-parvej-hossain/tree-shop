@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../../assets/images/logo.png';
 import register from '../../assets/images/register.jpg';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import useAuth from './../../hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
@@ -9,8 +9,9 @@ import usePostApi from '../../hooks/usePostApi';
 import uploadImage from '../../api/uplodeImageImgeBB/uploadImage';
 
 const SignUp = () => {
-  const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
-
+  const { createUser, signInWithGoogle, updateUserProfile } =
+    useAuth();
+  const navigate = useNavigate();
   // React Query mutation for your backend
   const { mutate, isLoading } = usePostApi('/users', {
     successMessage: 'User added successfully',
@@ -42,7 +43,7 @@ const SignUp = () => {
       await updateUserProfile(userInfo.name, imageUrl);
       // 2️⃣ Then, save user data in your backend (MongoDB)
       mutate(userInfo);
-
+      navigate('/');
       // 3️⃣ Reset form
       form.reset();
     } catch (err) {
@@ -66,6 +67,7 @@ const SignUp = () => {
       };
 
       mutate(userInfo);
+      navigate('/');
     } catch (err) {
       console.error('Google sign-in failed', err);
     }

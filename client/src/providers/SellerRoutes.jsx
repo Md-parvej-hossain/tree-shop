@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router';
-import useAuth from '../../hooks/useAuth';
-import useRole from '../../hooks/useRole';
+import useAuth from '../hooks/useAuth';
+import useRole from '../hooks/useRole';
 
-const RiderRoute = ({ children }) => {
+const SellerRoutes = ({ children }) => {
   const { user, loading, logOut } = useAuth();
   const { role, isLoading } = useRole();
   const location = useLocation();
@@ -11,13 +11,14 @@ const RiderRoute = ({ children }) => {
     return <div className="text-center mt-10">Loading...</div>;
   }
 
-  if (user && role === 'Rider') {
+  if (user && role === 'seller') {
     return children;
   }
 
   return (
-    logOut(), (<Navigate to="/login" state={{ from: location }} replace />)
+    logOut(),
+    (<Navigate to="/login" state={{ from: location }} replace />)
   );
 };
 
-export default RiderRoute;
+export default SellerRoutes;

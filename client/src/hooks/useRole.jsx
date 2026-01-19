@@ -5,7 +5,6 @@ import useAxiosPublic from './useAxiosPublic';
 const useRole = () => {
   const { user, loading } = useAuth();
   const axiosPublic = useAxiosPublic();
-
   const { data: role, isLoading } = useQuery({
     queryKey: ['role', user?.email],
     enabled: !loading && !!user?.email,

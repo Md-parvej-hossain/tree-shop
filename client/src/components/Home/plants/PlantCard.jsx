@@ -13,7 +13,7 @@ const PlantCard = ({ plants }) => {
     invalidateKey: 'card',
   });
   const reflase = reflase => {
-    reflase()
+    reflase();
   };
   // Function to handle add to cart click
   const handleAddToCart = async () => {
@@ -24,7 +24,7 @@ const PlantCard = ({ plants }) => {
       price: plants.newPrice,
       quantity: 1,
     });
-    reflase()
+    reflase();
   };
   return (
     <div className="group relative bg-base-100  shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
@@ -60,7 +60,10 @@ const PlantCard = ({ plants }) => {
       </div>
 
       {/* Content Section */}
-      <div className="p-4 text-center space-y-2">
+      <div
+        className="p-4 text-center space-y-2"
+        
+      >
         {/* Title */}
         <h2 className="text-lg font-semibold text-base-content truncate">
           {plants.name}
@@ -73,7 +76,7 @@ const PlantCard = ({ plants }) => {
               <FaStar key={index} className="text-yellow-400 text-sm" />
             ) : (
               <FaRegStar key={index} className="text-gray-300 text-sm" />
-            )
+            ),
           )}
         </div>
 

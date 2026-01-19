@@ -31,8 +31,11 @@ const AboutUs = () => {
             src={`${consterOne}`}
             alt="Our Mission"
             className="rounded-xl shadow-lg w-full h-full object-cover"
+            data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine"
           />
-          <div>
+          <div className="">
             <h2 className="text-3xl font-semibold mb-4">Our Mission</h2>
             <p className="text-gray-600 leading-relaxed">
               Our mission is to bring nature closer to people by providing
@@ -54,6 +57,9 @@ const AboutUs = () => {
             src={`${continerTwo}`}
             alt="Our Vision"
             className="rounded-xl shadow-lg w-full h-full object-cover"
+            data-aos="fade-left"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine"
           />
         </div>
 
@@ -63,6 +69,9 @@ const AboutUs = () => {
             src={`${continerThree}`}
             alt="Why Choose Us"
             className="rounded-xl shadow-lg"
+            data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine"
           />
           <div>
             <h2 className="text-3xl font-semibold mb-4">Why Choose Us</h2>

@@ -20,7 +20,7 @@ const UpdatePlant = () => {
     successMessage: 'Plant updated successfully!',
   });
 
-  console.log(plant);
+  //console.log(plant);
   const {
     name,
     image,
@@ -33,31 +33,31 @@ const UpdatePlant = () => {
     type,
   } = plant || {};
 
- const handleSubmit = async e => {
-   e.preventDefault();
-   const form = e.target;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const form = e.target;
 
-   let imageUrl = image;
-   if (form.image.files.length > 0) {
-     imageUrl = await uploadImage(form.image.files[0]);
-   }
+    let imageUrl = image;
+    if (form.image.files.length > 0) {
+      imageUrl = await uploadImage(form.image.files[0]);
+    }
 
-   const formData = new FormData(form);
+    const formData = new FormData(form);
 
-   const plantInfo = {
-     name: formData.get('name'),
-     image: imageUrl,
-     newPrice: Number(formData.get('newPrice')),
-     oldPrice: Number(formData.get('oldPrice')),
-     description: formData.get('description'),
-     rating: Number(formData.get('rating')),
-     quantity: Number(formData.get('quantity')),
-     category: formData.get('category'),
-     type: formData.get('type'),
-   };
+    const plantInfo = {
+      name: formData.get('name'),
+      image: imageUrl,
+      newPrice: Number(formData.get('newPrice')),
+      oldPrice: Number(formData.get('oldPrice')),
+      description: formData.get('description'),
+      rating: Number(formData.get('rating')),
+      quantity: Number(formData.get('quantity')),
+      category: formData.get('category'),
+      type: formData.get('type'),
+    };
 
-   updatePlant.mutate({ id, data: plantInfo });
- };
+    updatePlant.mutate({ id, data: plantInfo });
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>{error.message}</p>;

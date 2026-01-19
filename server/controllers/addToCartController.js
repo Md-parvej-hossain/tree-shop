@@ -2,7 +2,7 @@ const Cards = require('../models/AddtoCart'); // make sure filename matches
 
 // CREATE card
 exports.createCards = async (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   try {
     const cards = await Cards.create(req.body);
     res.status(201).json(cards);

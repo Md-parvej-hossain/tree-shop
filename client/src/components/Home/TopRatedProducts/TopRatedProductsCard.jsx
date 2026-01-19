@@ -27,7 +27,7 @@ const TopRatedProductsCard = ({ data }) => {
     reflase();
   };
   return (
-    <div className="group relative bg-base-100  shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-base-100  shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" >
       {/* Image Section */}
       <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
         <img

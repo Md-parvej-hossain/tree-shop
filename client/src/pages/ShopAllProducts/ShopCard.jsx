@@ -5,7 +5,7 @@ import CartSidebar from '../../components/Home/CartSidebar/CartSidebar';
 import usePostApi from '../../hooks/usePostApi';
 
 const ShopCard = ({ plants }) => {
-  console.log(plants);
+  //console.log(plants);
   const max = 5;
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ const ShopCard = ({ plants }) => {
     });
   };
   return (
-    <div className="card bg-base-100 group shadow-sm overflow-hidden">
+    <div className="card bg-base-100 group shadow-sm overflow-hidden" >
       {/* Image Wrapper */}
       <div className="relative">
         <figure className="px-10 pt-10">
@@ -72,7 +72,7 @@ const ShopCard = ({ plants }) => {
               <FaStar key={index} />
             ) : (
               <FaRegStar key={index} className="text-gray-300" />
-            )
+            ),
           )}
         </div>
 

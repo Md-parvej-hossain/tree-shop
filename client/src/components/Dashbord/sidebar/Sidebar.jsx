@@ -7,15 +7,16 @@ import {
   MdLogout,
   MdFormatListBulletedAdd,
 } from 'react-icons/md';
+import { MdOutlinePayment } from 'react-icons/md';
+import { FaBorderAll } from 'react-icons/fa';
 import { MdOutlineBorderAll } from 'react-icons/md';
-import { VscVmActive } from 'react-icons/vsc';
 import { MdPendingActions } from 'react-icons/md';
 import useAuth from '../../../hooks/useAuth';
 import useRole from '../../../hooks/useRole';
 const Sidebar = () => {
   const { logOut } = useAuth();
-  const role = useRole();
-  console.log(role);
+  const { role } = useRole();
+  //console.log(role);
   return (
     <div className="drawer-side shadow-lg shadow-green-600 ">
       <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
@@ -34,33 +35,46 @@ const Sidebar = () => {
             </NavLink>
           </li>
 
-          <li>
-            <NavLink to="/dashboard/users">
-              <MdPeople /> Users
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/addPlant">
-              <MdFormatListBulletedAdd /> AddPlant
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/activeSeller">
-              <VscVmActive /> ActiveSeller
-            </NavLink>
-          </li>
+          {role == 'seller' && (
+            <li>
+              <NavLink to="/dashboard/addPlant">
+                <MdFormatListBulletedAdd /> AddPlant
+              </NavLink>
+            </li>
+          )}
+          {role == 'admin' && (
+            <li>
+              <NavLink to="/dashboard/users">
+                <MdPeople /> Users
+              </NavLink>
+            </li>
+          )}
+          {role == 'admin' && (
+            <li>
+              <NavLink to="/dashboard/pendingSeller">
+                <MdPendingActions /> PendingSeller
+              </NavLink>
+            </li>
+          )}
+
+          {role == 'seller' && (
+            <li>
+              <NavLink to="/dashboard/allPlant">
+                <MdOutlineBorderAll /> AllPlant
+              </NavLink>
+            </li>
+          )}
 
           <li>
-            <NavLink to="/dashboard/pendingSeller">
-              <MdPendingActions /> PendingSeller
+            <NavLink to="/dashboard/myOrder">
+              <FaBorderAll /> My Order
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/allPlant">
-              <MdOutlineBorderAll /> AllPlant
+            <NavLink to="/dashboard/paymentHistory">
+              <MdOutlinePayment /> Payment History
             </NavLink>
           </li>
-
           <li>
             <NavLink to="/dashboard/settings">
               <MdSettings /> Settings

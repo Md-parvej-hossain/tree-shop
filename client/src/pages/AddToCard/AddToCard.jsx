@@ -4,7 +4,10 @@ import useDeleteApi from '../../hooks/useDeleatApi';
 import toast from 'react-hot-toast';
 import { FadeLoader } from 'react-spinners';
 import EmptyState from '../../components/Shared/EmptyState/EmptyState';
-
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from '../../components/From/CheckoutFeom';
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_CLINT_KEY);
 const AddToCart = () => {
   const navigate = useNavigate();
   const { data = [], isLoading, isError, error } = useGetApi('cards', '/cards');
@@ -114,10 +117,15 @@ const AddToCart = () => {
 
           <div className="text-center space-y-3">
             <p className="text-sm">Are you sure you want to order?</p>
-            <button className="btn btn-success w-full">Place Order</button>
-            <p className="text-xs text-gray-400">
-              By clicking Place Order, I agree to Terms of Service
+            {/* <button className="btn btn-success w-full">Place Order</button> */}
+            <p className="text-lg font-bold text-gray-400">
+              Place Order and pay
             </p>
+          </div>
+          <div>
+            <Elements stripe={stripePromise}>
+              <CheckoutForm totalPrice={subtotal + 50}></CheckoutForm>
+            </Elements>
           </div>
         </div>
       </div>

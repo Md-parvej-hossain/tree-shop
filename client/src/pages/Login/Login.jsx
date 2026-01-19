@@ -1,12 +1,13 @@
 import logo from '../../assets/images/logo.png';
 import login from '../../assets/images/login.jpg';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
 import usePostApi from '../../hooks/usePostApi';
 const Login = () => {
   const { signIn, signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
   const { mutate, isLoading } = usePostApi('/users', {
     successMessage: 'User added successfully',
     invalidateKey: 'users',
@@ -19,13 +20,13 @@ const Login = () => {
       name: formData.get('name'),
       password: formData.get('password'),
     };
-    console.log(userInfo);
     // Optional: reset form
     form.reset();
     try {
       await signIn(userInfo.name, userInfo.password);
+      navigate('/');
     } catch (err) {
-      console.log('Sign In Feald', err);
+      //console.log('Sign In Feald', err);
     }
   };
 
@@ -44,6 +45,7 @@ const Login = () => {
       };
 
       mutate(userInfo);
+      navigate('/');
     } catch (err) {
       console.error('Google sign-in failed', err);
     }

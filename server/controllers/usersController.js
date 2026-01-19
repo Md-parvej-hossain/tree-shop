@@ -51,7 +51,7 @@ exports.getUserById = async (req, res) => {
 // UPDATE user
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const user = await User.findByIdAndUpdate(req.params.email, req.body, {
       new: true,
       runValidators: true,
     });
@@ -63,6 +63,47 @@ exports.updateUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+// UPDATE user
+exports.updateUserRole = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { role } = req.body;
+
+    // 1️⃣ Validate role
+    const allowedRoles = ['customer', 'seller', 'admin'];
+    if (!allowedRoles.includes(role)) {
+      return res.status(400).json({
+        message: 'Invalid role',
+      });
+    }
+
+    // 2️⃣ Update user role
+    const user = await User.findOneAndUpdate(
+      { email },
+      { role },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
+    res.status(200).json({
+      message: 'User role updated successfully',
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to update user role',
+      error: error.message,
+    });
   }
 };
 

@@ -70,13 +70,6 @@ const UsersTable = ({ users, onDelete }) => {
 
                 <td>{new Date(userData.createdAt).toLocaleDateString()}</td>
                 <td className="flex gap-2 justify-center">
-                  <Link
-                    to={`/dashboard/users/${userData._id}`}
-                    className="btn btn-xs btn-outline"
-                  >
-                    View
-                  </Link>
-
                   <button
                     onClick={() => onDelete(userData._id)}
                     className="btn btn-xs btn-error text-white"
@@ -100,9 +93,10 @@ const UsersTable = ({ users, onDelete }) => {
                   <div className="w-12 rounded-full ring ring-green-400">
                     <img
                       src={
-                        user.photo || 'https://i.ibb.co/ZYW3VTp/brown-brim.png'
+                        user?.photoURL 
                       }
                       alt="user"
+                      referrerPolicy='no-referrer'
                     />
                   </div>
                 </div>
@@ -123,7 +117,9 @@ const UsersTable = ({ users, onDelete }) => {
                 </span>
               </div>
 
-              <p className="text-sm mt-1">Joined: {user.joinedDate}</p>
+              <p className="text-sm mt-1">
+                Joined: {new Date(user.createdAt).toLocaleDateString()}
+              </p>
 
               <div className="flex gap-2 mt-3">
                 <button

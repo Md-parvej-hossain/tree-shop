@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 
 const AllPlantsTable = ({ plants, onDelete }) => {
-  console.log(plants);
+  //console.log(plants);
   return (
     <div className="w-full p-4">
       <h2 className="text-2xl font-bold mb-4 text-green-700">🌿 All Plants</h2>

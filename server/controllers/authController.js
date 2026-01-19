@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 // Create JWT
 exports.createJWT = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
+  //console.log(email);
   if (!email) {
     return res.status(400).send({ message: 'Email is required' });
   }

@@ -13,7 +13,13 @@ router.get('/users', verifyToken, userController.getUser);
 router.get('/users/:id', verifyToken, userController.getUserById);
 
 // Update user
-router.put('/users/:id', verifyToken, userController.updateUser);
+router.put('/users/:email', verifyToken, userController.updateUser);
+// Update user
+router.patch(
+  '/users/role/:email',
+  verifyToken,
+  userController.updateUserRole,
+);
 
 // Delete user
 router.delete('/users/:id', verifyToken, userController.deleteUser);

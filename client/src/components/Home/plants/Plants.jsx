@@ -33,7 +33,8 @@ const Plants = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-20">
+      <div className="flex justify-center py-20" data-aos="fade-up"
+        data-aos-duration="3000">
         <FadeLoader />
       </div>
     );
