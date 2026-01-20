@@ -6,7 +6,12 @@ const app = express();
 
 // CORS
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://treeshop-52192.web.app',
+    'https://treeshop-52192.firebaseapp.com',
+  ],
   credentials: true,
 };
 app.use(cors(corsOptions));
