@@ -8,12 +8,10 @@ const app = express();
 const corsOptions = {
   origin: ['http://localhost:5173', 'http://localhost:5174'],
   credentials: true,
-  optionsSuccessStatus: 200,
 };
-
 app.use(cors(corsOptions));
 
-// ✅ MUST come BEFORE routes
+// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
@@ -23,13 +21,14 @@ app.use('/api', require('./routes/plantRoutes'));
 app.use('/api', require('./routes/addToCartRoutes'));
 app.use('/api', require('./routes/authRouts'));
 app.use('/api', require('./routes/sellerRequestRoutes'));
-app.use('api', require('./routes/paymentRoutes'));
+app.use('/api', require('./routes/paymentRoutes')); // FIXED
+
 // Health check
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running' });
 });
 
-// Global error handler
+// Error handler
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message || 'Server Error',
