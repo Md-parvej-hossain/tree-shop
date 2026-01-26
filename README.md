@@ -2,7 +2,7 @@
 
 <p align="center">
   <img 
-    src="https://github.com/Md-parvej-hossain/Warm-Food-Appreciation-/blob/main/woarm%20Food.png?raw=true" 
+    src="https://github.com/Md-parvej-hossain/tree-shop/blob/main/plantNet.png?raw=true" 
     alt="PlantNet Banner" 
     width="800"
   />
